@@ -1,0 +1,300 @@
+[{
+  "_id": {
+    "$oid": "66f27633026ea3b26a2ae2b0"
+  },
+  "name": "Wireless Headphones",
+  "price": 59.99,
+  "image": "",
+  "amountInStock": 150,
+  "categoryId": 1
+},
+{
+  "_id": {
+    "$oid": "66f27633026ea3b26a2ae2b1"
+  },
+  "name": "Bluetooth Speaker",
+  "price": 29.99,
+  "image": "",
+  "amountInStock": 200,
+  "categoryId": 1
+},
+{
+  "_id": {
+    "$oid": "66f27633026ea3b26a2ae2b2"
+  },
+  "name": "Smartphone Stand",
+  "price": 12.49,
+  "image": "",
+  "amountInStock": 500,
+  "categoryId": 2
+},
+{
+  "_id": {
+    "$oid": "66f27633026ea3b26a2ae2b3"
+  },
+  "name": "Gaming Mouse",
+  "price": 45.99,
+  "image": "",
+  "amountInStock": 300,
+  "categoryId": 3
+},
+{
+  "_id": {
+    "$oid": "66f27633026ea3b26a2ae2b4"
+  },
+  "name": "Mechanical Keyboard",
+  "price": 89.99,
+  "image": "",
+  "amountInStock": 100,
+  "categoryId": 3
+},
+{
+  "_id": {
+    "$oid": "66f27633026ea3b26a2ae2b5"
+  },
+  "name": "4K Monitor",
+  "price": 299.99,
+  "image": "",
+  "amountInStock": 50,
+  "categoryId": 4
+},
+{
+  "_id": {
+    "$oid": "66f27633026ea3b26a2ae2b6"
+  },
+  "name": "USB-C Charging Cable",
+  "price": 8.99,
+  "image": "",
+  "amountInStock": 700,
+  "categoryId": 2
+},
+{
+  "_id": {
+    "$oid": "66f27633026ea3b26a2ae2b7"
+  },
+  "name": "Laptop Cooling Pad",
+  "price": 24.99,
+  "image": "",
+  "amountInStock": 150,
+  "categoryId": 4
+},
+{
+  "_id": {
+    "$oid": "66f27633026ea3b26a2ae2b8"
+  },
+  "name": "External Hard Drive 1TB",
+  "price": 69.99,
+  "image": "",
+  "amountInStock": 80,
+  "categoryId": 4
+},
+{
+  "_id": {
+    "$oid": "66f27633026ea3b26a2ae2b9"
+  },
+  "name": "Wireless Mouse",
+  "price": 19.99,
+  "image": "",
+  "amountInStock": 400,
+  "categoryId": 3
+},
+{
+  "_id": {
+    "$oid": "66f27633026ea3b26a2ae2ba"
+  },
+  "name": "Smartwatch",
+  "price": 149.99,
+  "image": "",
+  "amountInStock": 120,
+  "categoryId": 5
+},
+{
+  "_id": {
+    "$oid": "66f27633026ea3b26a2ae2bb"
+  },
+  "name": "Fitness Tracker",
+  "price": 99.99,
+  "image": "",
+  "amountInStock": 250,
+  "categoryId": 5
+},
+{
+  "_id": {
+    "$oid": "66f27633026ea3b26a2ae2bc"
+  },
+  "name": "Noise-Cancelling Earbuds",
+  "price": 89.99,
+  "image": "",
+  "amountInStock": 200,
+  "categoryId": 1
+},
+{
+  "_id": {
+    "$oid": "66f27633026ea3b26a2ae2bd"
+  },
+  "name": "Smart Light Bulbs (4 Pack)",
+  "price": 34.99,
+  "image": "",
+  "amountInStock": 350,
+  "categoryId": 6
+},
+{
+  "_id": {
+    "$oid": "66f27633026ea3b26a2ae2be"
+  },
+  "name": "Wi-Fi Router",
+  "price": 74.99,
+  "image": "",
+  "amountInStock": 95,
+  "categoryId": 4
+},
+{
+  "_id": {
+    "$oid": "66f27633026ea3b26a2ae2bf"
+  },
+  "name": "Portable Power Bank",
+  "price": 29.99,
+  "image": "",
+  "amountInStock": 500,
+  "categoryId": 2
+},
+{
+  "_id": {
+    "$oid": "66f27633026ea3b26a2ae2c0"
+  },
+  "name": "Action Camera",
+  "price": 199.99,
+  "image": "",
+  "amountInStock": 60,
+  "categoryId": 7
+},
+{
+  "_id": {
+    "$oid": "66f27633026ea3b26a2ae2c1"
+  },
+  "name": "Drone with 4K Camera",
+  "price": 499.99,
+  "image": "",
+  "amountInStock": 40,
+  "categoryId": 7
+},
+{
+  "_id": {
+    "$oid": "66f27633026ea3b26a2ae2c2"
+  },
+  "name": "Portable Bluetooth Keyboard",
+  "price": 39.99,
+  "image": "",
+  "amountInStock": 100,
+  "categoryId": 3
+},
+{
+  "_id": {
+    "$oid": "66f27633026ea3b26a2ae2c3"
+  },
+  "name": "USB Flash Drive 128GB",
+  "price": 14.99,
+  "image": "",
+  "amountInStock": 600,
+  "categoryId": 4
+},
+{
+  "_id": {
+    "$oid": "66f27633026ea3b26a2ae2c4"
+  },
+  "name": "Tablet Stand",
+  "price": 18.99,
+  "image": "",
+  "amountInStock": 350,
+  "categoryId": 2
+},
+{
+  "_id": {
+    "$oid": "66f27633026ea3b26a2ae2c5"
+  },
+  "name": "VR Headset",
+  "price": 399.99,
+  "image": "",
+  "amountInStock": 45,
+  "categoryId": 7
+},
+{
+  "_id": {
+    "$oid": "66f27633026ea3b26a2ae2c6"
+  },
+  "name": "Smart Doorbell",
+  "price": 149.99,
+  "image": "",
+  "amountInStock": 75,
+  "categoryId": 6
+},
+{
+  "_id": {
+    "$oid": "66f27633026ea3b26a2ae2c7"
+  },
+  "name": "Electric Scooter",
+  "price": 599.99,
+  "image": "",
+  "amountInStock": 20,
+  "categoryId": 8
+},
+{
+  "_id": {
+    "$oid": "66f27633026ea3b26a2ae2c8"
+  },
+  "name": "Laptop Backpack",
+  "price": 49.99,
+  "image": "",
+  "amountInStock": 180,
+  "categoryId": 2
+},
+{
+  "_id": {
+    "$oid": "66f27633026ea3b26a2ae2c9"
+  },
+  "name": "Wireless Charging Pad",
+  "price": 29.99,
+  "image": "",
+  "amountInStock": 400,
+  "categoryId": 2
+},
+{
+  "_id": {
+    "$oid": "66f27633026ea3b26a2ae2ca"
+  },
+  "name": "Noise-Cancelling Headphones",
+  "price": 129.99,
+  "image": "",
+  "amountInStock": 110,
+  "categoryId": 1
+},
+{
+  "_id": {
+    "$oid": "66f27633026ea3b26a2ae2cb"
+  },
+  "name": "Smart Thermostat",
+  "price": 199.99,
+  "image": "",
+  "amountInStock": 70,
+  "categoryId": 6
+},
+{
+  "_id": {
+    "$oid": "66f27633026ea3b26a2ae2cc"
+  },
+  "name": "Robot Vacuum Cleaner",
+  "price": 299.99,
+  "image": "",
+  "amountInStock": 65,
+  "categoryId": 6
+},
+{
+  "_id": {
+    "$oid": "66f27633026ea3b26a2ae2cd"
+  },
+  "name": "Home Security Camera",
+  "price": 99.99,
+  "image": "",
+  "amountInStock": 150,
+  "categoryId": 6
+}]

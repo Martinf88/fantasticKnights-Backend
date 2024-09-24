@@ -1,0 +1,35 @@
+[{
+  "_id": {
+    "$oid": "66f27758026ea3b26a2ae2d0"
+  },
+  "name": "John Henry",
+  "isAdmin": false
+},
+{
+  "_id": {
+    "$oid": "66f27758026ea3b26a2ae2d1"
+  },
+  "name": "Jane Smith",
+  "isAdmin": true
+},
+{
+  "_id": {
+    "$oid": "66f27758026ea3b26a2ae2d2"
+  },
+  "name": "Michael Johnson",
+  "isAdmin": false
+},
+{
+  "_id": {
+    "$oid": "66f27758026ea3b26a2ae2d3"
+  },
+  "name": "Emily Brown",
+  "isAdmin": false
+},
+{
+  "_id": {
+    "$oid": "66f27758026ea3b26a2ae2d4"
+  },
+  "name": "Christopher Davis",
+  "isAdmin": true
+}]
