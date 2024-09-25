@@ -1,27 +1,28 @@
 [
 	{
-	  "userId": "ObjectId(\"66f27758026ea3b26a2ae2d0\")",
-	  "productId": "ObjectId(\"66f29f25026ea3b26a2ae2db\")",
+	  "userId": { "$oid": "66f27758026ea3b26a2ae2d0" },
+	  "productId": { "$oid": "66f29f25026ea3b26a2ae2db" },
 	  "amount": 2
 	},
 	{
-	  "userId": "ObjectId(\"66f27758026ea3b26a2ae2d1\")",
-	  "productId": "ObjectId(\"66f29f25026ea3b26a2ae2dc\")",
+	  "userId": { "$oid": "66f27758026ea3b26a2ae2d1" },
+	  "productId": { "$oid": "66f29f25026ea3b26a2ae2dc" },
 	  "amount": 1
 	},
 	{
-	  "userId": "ObjectId(\"66f27758026ea3b26a2ae2d2\")",
-	  "productId": "ObjectId(\"66f29f25026ea3b26a2ae2dd\")",
+	  "userId": { "$oid": "66f27758026ea3b26a2ae2d2" },
+	  "productId": { "$oid": "66f29f25026ea3b26a2ae2dd" },
 	  "amount": 1
 	},
 	{
-	  "userId": "ObjectId(\"66f27758026ea3b26a2ae2d3\")",
-	  "productId": "ObjectId(\"66f29f25026ea3b26a2ae2de\")",
+	  "userId": { "$oid": "66f27758026ea3b26a2ae2d3" },
+	  "productId": { "$oid": "66f29f25026ea3b26a2ae2de" },
 	  "amount": 3
 	},
 	{
-	  "userId": "ObjectId(\"66f27758026ea3b26a2ae2d4\")",
-	  "productId": "ObjectId(\"66f29f25026ea3b26a2ae2df\")",
+	  "userId": { "$oid": "66f27758026ea3b26a2ae2d4" },
+	  "productId": { "$oid": "66f29f25026ea3b26a2ae2df" },
 	  "amount": 4
 	}
-]  
+  ]
+  
