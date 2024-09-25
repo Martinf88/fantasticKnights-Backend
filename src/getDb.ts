@@ -4,13 +4,14 @@ import { UserModel } from "./models/userModel.js";
 
 const con: string | undefined = process.env.CONNECTION_STRING;
 let db: Db | null = null;
+let client: MongoClient | null = null
 
 async function getDb() {
     if (!con) {
         throw new Error("No connection string");
     }
 
-    const client = new MongoClient(con);
+    client = new MongoClient(con);
     await client.connect();
     db = client.db('fantasticKnights');
 }
@@ -29,4 +30,20 @@ function getUserCollection(): Collection<UserModel> {
     return db.collection<UserModel>('user');
 }
 
-export { getDb, getCartCollection, getUserCollection };
+
+//TODO: Close database function
+async function closeClient() {
+	if(client) {
+		try {
+			await client.close()
+			client = null
+			db = null
+		} catch (error) {
+			console.error('Error closing MongoDB client', error);
+			
+		}
+	}
+}
+
+export { getDb, getCartCollection, getUserCollection, closeClient };
+
