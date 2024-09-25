@@ -5,3 +5,9 @@ price: number;
 image: string;
 amountInStock: number;
 }
+
+export interface ProductQuery {
+    name?: string;
+    maxPrice?: number;
+    minPrice?: number;
+}

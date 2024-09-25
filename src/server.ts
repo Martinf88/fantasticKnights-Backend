@@ -8,6 +8,7 @@ app.use('/', (req: Request, res: Response, next: NextFunction) => {
 	next()
 })
 
+
 app.listen(port, () => {
 	console.log('Server is listening on port ' + port);
 })
