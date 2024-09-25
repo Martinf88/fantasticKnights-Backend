@@ -16,6 +16,8 @@ async function startServer() {
 			next()
 		})
 		
+		app.use(express.json());
+
 		app.use('/cart', cartRouter)
 		app.use('/users', userRouter)
 		
