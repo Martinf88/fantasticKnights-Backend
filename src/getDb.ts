@@ -3,13 +3,14 @@ import { CartModel } from "./models/cartModel.js";
 
 const con: string | undefined = process.env.CONNECTION_STRING;
 let db: Db | null = null;
+let client: MongoClient | null = null
 
 async function getDb() {
     if (!con) {
         throw new Error("No connection string");
     }
 
-    const client = new MongoClient(con);
+    client = new MongoClient(con);
     await client.connect();
     db = client.db('fantasticKnights');
 }
@@ -21,4 +22,20 @@ function getCartCollection(): Collection<CartModel> {
     return db.collection<CartModel>('cart');
 }
 
-export { getDb, getCartCollection };
+
+//TODO: Close database function
+async function closeClient() {
+	if(client) {
+		try {
+			await client.close()
+			client = null
+			db = null
+		} catch (error) {
+			console.error('Error closing MongoDB client', error);
+			
+		}
+	}
+}
+
+export { getDb, getCartCollection, closeClient };
+
