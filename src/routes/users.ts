@@ -73,3 +73,33 @@ userRouter.put('/:id', async (req: Request, res: Response) => {
         res.status(500).json({ message: 'Internal server error' });
     }
 });
+
+userRouter.delete('/:id', async (req: Request, res: Response) => {
+    try {
+        const userId = req.params.id;
+    
+        if (!ObjectId.isValid(userId)) {
+            return res.status(400).json({message: 'Invalid user ID'})
+        }
+    
+        const userCol = getUserCollection();
+        const deleteResult = await userCol.deleteOne({
+            _id: new ObjectId(userId)
+        });
+    
+        if (deleteResult.deletedCount === 0) {
+            return res.status(404).json({
+                message: 'User not found'
+            });
+        }
+        res.status(200).json({
+            message: 'User deleted successfully'
+        });
+
+    } catch (error) {
+        console.error('Error deleting user', error);
+        res.status(500).json({
+            message: 'server error'
+        });
+    }
+});
