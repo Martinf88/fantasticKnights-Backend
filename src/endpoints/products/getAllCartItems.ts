@@ -9,12 +9,24 @@ async function getAllCartItems() {
 		console.log('No connection string, check your .env file!');
 		throw new Error("No connection string");
 	}
-	const client: MongoClient = await MongoClient.connect(con)
-	const db: Db = await client.db('fantasticKnights')
-	const col: Collection<CartModel> = db.collection<CartModel>('cart')
 
-	const result: WithId<CartModel>[] = await col.find({}).toArray()
-	return result
+	let client: MongoClient | null = null;
+
+	try {
+		client = await MongoClient.connect(con)
+		const db: Db = await client.db('fantasticKnights')
+		const col: Collection<CartModel> = db.collection<CartModel>('cart')
+	
+		const result: WithId<CartModel>[] = await col.find({}).toArray()
+		return result
+	} catch (error) {
+		console.error('Error fetching cart items: ', error);
+		throw new Error("Could not fetch cart items");
+	} finally {
+		if (client !== null) {
+			await client.close()
+		}
+	}
 }
 
 export { getAllCartItems }
