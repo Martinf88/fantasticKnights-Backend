@@ -18,3 +18,10 @@ cartRouter.get('/', async (req: Request, res: Response<WithId<CartModel>[]>) => 
 		res.status(500)
 	}
 })
+
+//POST
+//PUT
+
+//DELETE
+//deleteOne
+//deleteAll
