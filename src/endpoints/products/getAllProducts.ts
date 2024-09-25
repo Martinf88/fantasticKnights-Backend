@@ -30,7 +30,7 @@ async function getFilteredProducts(query: ProductQuery): Promise<WithId<ProductM
     const filter: Filter<ProductModel> = {}
 
     if(query.name) {
-        filter.name = { $regex: new RegExp(query.name, 'i' )}
+        filter.name = { $regex: query.name, $options: 'i'}
     }
     if(query.minPrice !== undefined || query.maxPrice !== undefined) {
         filter.price = {}
