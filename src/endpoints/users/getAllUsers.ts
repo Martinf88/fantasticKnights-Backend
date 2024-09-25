@@ -1,20 +1,17 @@
-import { MongoClient, Db, Collection, WithId } from "mongodb";
+import { WithId } from "mongodb";
 import { UserModel } from "../../models/userModel.js"
+import { getUserCollection } from "../../getDb.js";
 
-const conUser: string | undefined = process.env.CONNECTION_STRING
-
-async function getAllUsers(): Promise<WithId<UserModel>[]> {
-	if( !conUser ) {
-		console.log('No connection string, check your .env file!')
-		throw new Error('No connection string')
-	}
-    
-	const client: MongoClient = await MongoClient.connect(conUser)
-	const db: Db = await client.db('fantasticKnights')
-	const col: Collection<UserModel> = db.collection<UserModel>('user')
-
-	const result: WithId<UserModel>[] = await col.find({}).toArray()
-	return result
+async function getAllUsers() {
+    const userCol = getUserCollection()
+    console.log("Connected to users collection");
+    try { 
+        const userResult: WithId<UserModel>[] = await userCol.find({}).toArray();
+        return userResult;
+    } catch (error) {
+        console.error('Error fetching users', error)
+        throw new Error('Could not fetch users')
+    }
 }
 
 export { getAllUsers }

@@ -1,5 +1,6 @@
 import { MongoClient, Db, Collection } from "mongodb";
 import { CartModel } from "./models/cartModel.js";
+import { UserModel } from "./models/userModel.js";
 
 const con: string | undefined = process.env.CONNECTION_STRING;
 let db: Db | null = null;
@@ -21,4 +22,11 @@ function getCartCollection(): Collection<CartModel> {
     return db.collection<CartModel>('cart');
 }
 
-export { getDb, getCartCollection };
+function getUserCollection(): Collection<UserModel> {
+    if (!db) {
+        throw new Error("Database not initialized");
+    }
+    return db.collection<UserModel>('user');
+}
+
+export { getDb, getCartCollection, getUserCollection };

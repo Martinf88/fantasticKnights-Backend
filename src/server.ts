@@ -1,5 +1,6 @@
 import express, { Express, NextFunction, Request, Response } from "express";
 import { cartRouter } from "./routes/cart.js";
+import { userRouter } from "./routes/users.js"
 import { getDb } from "./getDb.js";
 
 const app: Express = express()
@@ -16,6 +17,7 @@ async function startServer() {
 		})
 		
 		app.use('/cart', cartRouter)
+		app.use('/users', userRouter)
 		
 		app.listen(port, () => {
 			console.log('Server is listening on port ' + port);

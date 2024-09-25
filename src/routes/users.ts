@@ -28,8 +28,8 @@ userRouter.post('/', async (req: Request, res: Response) => {
     try {
         const newUser: UserModel = req.body;
         // validering?
-        const newUserResult = await col.insertOne(newUser)
-        res.status(201).json({message: 'User created', userId: newUserResult.insertId});
+        // const newUserResult = await col.insertOne(newUser)
+        // res.status(201).json({message: 'User created', userId: newUserResult.insertId});
     } catch {
 
     }
