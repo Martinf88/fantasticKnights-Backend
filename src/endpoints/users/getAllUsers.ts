@@ -2,7 +2,7 @@ import { WithId } from "mongodb";
 import { UserModel } from "../../models/userModel.js"
 import { getUserCollection } from "../../getDb.js";
 
-async function getAllUsers() {
+async function getAllUsers(): Promise<WithId<UserModel>[]> {
     const userCol = getUserCollection()
     console.log("Connected to users collection");
     try { 
