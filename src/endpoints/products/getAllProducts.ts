@@ -1,8 +1,6 @@
-import { WithId, Filter } from "mongodb";
+import { WithId, Filter, InsertOneResult } from "mongodb";
 import { ProductModel, ProductQuery } from "../../models/productModel.js";
 import { getProductCollection } from "../../getDb.js";
-
-const con: string | undefined = process.env.CONNECTION_STRING
 
 async function getAllProducts(): Promise<WithId<ProductModel>[]> {
     const col = getProductCollection()
@@ -20,8 +18,7 @@ async function getFilteredProducts(query: ProductQuery): Promise<WithId<ProductM
     const col = getProductCollection()
     const filter: Filter<ProductModel> = {}
     try {
-        if(query.name) {
-    
+        if(query.name) {   
             filter.name = { $regex: query.name, $options: 'i'}
         }
         if(query.minPrice !== undefined || query.maxPrice !== undefined) {
@@ -40,8 +37,19 @@ async function getFilteredProducts(query: ProductQuery): Promise<WithId<ProductM
         console.error('Error fetching filtered products', error)
         throw new Error('Could not fetch products')
     }
-
 }
 
-export { getAllProducts, getFilteredProducts }
+async function postNewProduct(newProduct: ProductModel): Promise<InsertOneResult<ProductModel>> {
+	const col = getProductCollection();
+	try {
+		const result: InsertOneResult<ProductModel> = await col.insertOne(newProduct)
+		console.log('Product added to productCollection: ', result);
+		return result;
+	} catch (error) {
+		console.error('Error adding product to collection: ', error);
+		throw new Error("Could not add product to collection");
+	}
+}
+
+export { getAllProducts, getFilteredProducts, postNewProduct }
 

@@ -1,6 +1,6 @@
 import express, { Request, Response, Router } from 'express'
 import { ProductModel } from '../models/productModel.js'
-import { getAllProducts, getFilteredProducts } from '../endpoints/products/getAllProducts.js'
+import { getAllProducts, getFilteredProducts, postNewProduct } from '../endpoints/products/getAllProducts.js'
 import { WithId } from 'mongodb'
 
 export const router: Router = express.Router()
@@ -31,5 +31,18 @@ router.get('/products/search', async (req: Request, res: Response<WithId<Product
     } catch(error) {
         console.log('Error in getting filtered items products.ts', error);    
         res.status(500)    
+    }
+})
+
+router.post('/products/post', async (req: Request, res: Response) => {
+    try {
+        const newProduct: ProductModel = req.body
+        if(!newProduct.name || !newProduct.price || !newProduct.amountInStock) {
+            return res.status(400).json({message: 'Missing required fields: name, price and ammountInStock need to be filled in'})
+        }
+        await postNewProduct(newProduct)
+        res.status(201).json({message: 'Product added successfully'})
+    } catch(error) {
+        console.error('Error in adding product', error)
     }
 })
