@@ -11,6 +11,8 @@ async function startServer() {
 		await getDb()
 		console.log("Database connected successfully");
 
+		app.use(express.json())
+
 		app.use('/', (req: Request, res: Response, next: NextFunction) => {
 			console.log(`${req.method} ${req.url}`, req.body);
 			next()
