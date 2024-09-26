@@ -1,4 +1,4 @@
-import { WithId, Filter, InsertOneResult } from "mongodb";
+import { WithId, Filter, InsertOneResult, UpdateResult, ObjectId, DeleteResult } from "mongodb";
 import { ProductModel, ProductQuery } from "../../models/productModel.js";
 import { getProductCollection } from "../../getDb.js";
 
@@ -51,5 +51,46 @@ async function postNewProduct(newProduct: ProductModel): Promise<InsertOneResult
 	}
 }
 
-export { getAllProducts, getFilteredProducts, postNewProduct }
+async function updateProduct(id: string, updatedProduct: Partial<ProductModel>): Promise<UpdateResult> {
+    const col = getProductCollection()
+    let objectId: ObjectId
+    try {
+        objectId = new ObjectId(id)
+    } catch(error) {
+        throw new Error('Invalid id format')
+    }
+
+    try {
+        const result: UpdateResult = await col.updateOne(
+            {_id: objectId},
+            {$set: updatedProduct}
+        )
+        return result
+    } catch(error) {
+        console.error('Error updating product in collection', error)
+        throw new Error('Could not update the collection')
+    }
+}
+
+async function deleteProduct(id: string): Promise<DeleteResult> {
+    const col = getProductCollection()
+    let objectId: ObjectId
+    try {
+        objectId = new ObjectId(id)
+    } catch(error) {
+        throw new Error('Invalid id')
+    }
+    try {
+        const result: DeleteResult = await col.deleteOne({ _id: objectId })
+        if (result.deletedCount === 0) {
+            throw new Error(`ID: ${id} not found`)
+        }
+        return result
+    } catch(error) {
+        console.error('Error deleting from collection', error)
+        throw new Error('Could not delete from collection')
+    }
+}
+
+export { getAllProducts, getFilteredProducts, postNewProduct, updateProduct, deleteProduct }
 

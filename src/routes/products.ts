@@ -1,6 +1,6 @@
 import express, { Request, Response, Router } from 'express'
 import { ProductModel } from '../models/productModel.js'
-import { getAllProducts, getFilteredProducts, postNewProduct } from '../endpoints/products/getAllProducts.js'
+import { deleteProduct, getAllProducts, getFilteredProducts, postNewProduct, updateProduct } from '../endpoints/products/getAllProducts.js'
 import { WithId } from 'mongodb'
 
 export const router: Router = express.Router()
@@ -34,7 +34,7 @@ router.get('/products/search', async (req: Request, res: Response<WithId<Product
     }
 })
 
-router.post('/products/post', async (req: Request, res: Response) => {
+router.post('/products', async (req: Request, res: Response) => {
     try {
         const newProduct: ProductModel = req.body
         if(!newProduct.name || !newProduct.price || !newProduct.amountInStock) {
@@ -44,5 +44,36 @@ router.post('/products/post', async (req: Request, res: Response) => {
         res.status(201).json({message: 'Product added successfully'})
     } catch(error) {
         console.error('Error in adding product', error)
+    }
+})
+
+router.put('/products/:id', async (req: Request, res: Response) => {
+    try {
+        const {id} = req.params
+        const updatedProduct: Partial<ProductModel> = req.body
+        if (Object.keys(updatedProduct).length === 0) {
+            return res.status(400).json({message: 'No fields to update'})
+        }
+        const result = await updateProduct(id, updatedProduct)
+        if (result.modifiedCount === 0) {
+            return res.status(404).json({message: 'Product not updated'})
+        }
+        res.status(200).json({message: 'Product updated'})
+    } catch(error) {
+        console.error('Error updating product', error)
+        res.status(500).json({message: 'Server issue'})
+    }
+})
+
+router.delete('/products/:id', async (req: Request, res: Response) => {
+    try {
+        const {id} = req.params
+        const result = await deleteProduct(id)
+        if (result.deletedCount === 0) {
+            return res.status(404).json({message: 'Product with this id not found'})
+        }
+        res.status(200).json({message: 'Product deleted successfully'})
+    } catch(error) {
+        
     }
 })
