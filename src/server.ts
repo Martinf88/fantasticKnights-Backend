@@ -1,6 +1,7 @@
 import express, { Express, NextFunction, Request, Response } from "express";
 import { cartRouter } from "./routes/cart.js";
 import { userRouter } from "./routes/users.js"
+import { router as productRouter } from './routes/products.js'
 import { getDb } from "./getDb.js";
 
 const app: Express = express()

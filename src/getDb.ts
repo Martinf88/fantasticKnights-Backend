@@ -1,6 +1,7 @@
 import { MongoClient, Db, Collection } from "mongodb";
 import { CartModel } from "./models/cartModel.js";
 import { UserModel } from "./models/userModel.js";
+import { ProductModel } from "./models/productModel.js";
 
 const con: string | undefined = process.env.CONNECTION_STRING;
 let db: Db | null = null;
@@ -29,6 +30,12 @@ function getUserCollection(): Collection<UserModel> {
     }
     return db.collection<UserModel>('user');
 }
+function getProductCollection(): Collection<ProductModel> {
+    if (!db) {
+        throw new Error("Database not initialized");
+    }
+    return db.collection<ProductModel>('product');
+}
 
 
 //TODO: Close database function
@@ -45,5 +52,5 @@ async function closeClient() {
 	}
 }
 
-export { getDb, getCartCollection, getUserCollection, closeClient };
+export { getDb, getCartCollection, getUserCollection, getProductCollection, closeClient };
 
