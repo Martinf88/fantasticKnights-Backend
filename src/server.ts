@@ -9,7 +9,6 @@ app.use('/', (req: Request, res: Response, next: NextFunction) => {
 	next()
 })
 
-app.use('/', productRouter) 
 app.use('/', productRouter)
 
 app.listen(port, () => {
