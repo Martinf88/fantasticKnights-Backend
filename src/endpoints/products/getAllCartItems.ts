@@ -1,9 +1,7 @@
-import {Collection, WithId, InsertOneResult, ObjectId, UpdateResult } from "mongodb";
+import {WithId, InsertOneResult, ObjectId, UpdateResult, DeleteResult } from "mongodb";
 import { CartModel } from "../../models/cartModel.js";
 import { getCartCollection } from "../../getDb.js";
 
-
-const con: string | undefined = process.env.CONNECTION_STRING
 
 async function getAllCartItems() {
     const col = getCartCollection();
@@ -42,5 +40,17 @@ async function updateCartItem(id: string, amount: number) {
 	}
 }
 
+async function deleteCartItem(id: string) {
+	const col = getCartCollection();
+	try {
+		const result: DeleteResult = await col.deleteOne(
+			{ _id: new ObjectId(id) }
+		)
+		return result
+	} catch (error) {
+		console.error('Error updating cart item: ', error);
+		throw new Error('Could not update cart item')
+	}
+}
 
-export { getAllCartItems, addItemToCart, updateCartItem }
+export { getAllCartItems, addItemToCart, updateCartItem, deleteCartItem }

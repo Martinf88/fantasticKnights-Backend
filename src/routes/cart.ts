@@ -1,6 +1,6 @@
 import express, { Router, Request, Response } from "express";
-import { addItemToCart, getAllCartItems, updateCartItem } from "../endpoints/products/getAllCartItems.js";
-import { WithId } from "mongodb";
+import { addItemToCart, getAllCartItems, updateCartItem, deleteCartItem } from "../endpoints/products/getAllCartItems.js";
+import { ObjectId, WithId } from "mongodb";
 import { CartModel } from "../models/cartModel.js";
 
 
@@ -43,14 +43,30 @@ cartRouter.put('/:id', async (req: Request, res: Response) => {
 		try {
 			const result = await updateCartItem(req.params.id, amount);
 			if (result.matchedCount === 0) {
-				return res.status(404).json({ message: 'Cart item not found' })
+				return res.status(404).json({ message: 'Item not found' })
 			}
 			res.status(200).json(({ message: 'Cart item updated' }))
 		}catch (error) {
 			console.error('Error updating cart item: ', error);
-			res.status(500).json({ message: 'Could not update cart item' })
+			res.status(500).json({ message: 'Could not update item' })
 	}
 })
 //DELETE
-//deleteOne
-//deleteAll
+cartRouter.delete('/:id', async (req: Request, res: Response) => {
+	try {
+		const cartItemId = req.params.id
+		if(!ObjectId.isValid(cartItemId)){
+			return res.status(400).json({message: 'Invalid ID'})
+		}
+		const result = await deleteCartItem(req.params.id);
+		if(result.deletedCount === 0) {
+			return res.status(404).json({ message: 'Item not found' })
+		}
+		  res.status(200).json({
+            message: 'Item deleted successfully'})
+
+	} catch (error) {
+		console.error('Error deleting cart item: ', error);
+		res.status(500).json({ message: 'Could not delete item' })
+	}
+})
