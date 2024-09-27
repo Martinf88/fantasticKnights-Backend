@@ -18,8 +18,13 @@ async function getFilteredProducts(query: ProductQuery): Promise<WithId<ProductM
     const col = getProductCollection()
     const filter: Filter<ProductModel> = {}
     try {
-        if(query.name) {   
-            filter.name = { $regex: query.name, $options: 'i'}
+        if (query.name) {
+            const searchWords = query.name.split(' ').filter(term => term.trim() !== '')
+            if (searchWords.length > 0) {
+                filter.$or = searchWords.map(term => ({
+                    name: { $regex: term, $options: 'i' }
+                }))
+            }
         }
         if(query.minPrice !== undefined || query.maxPrice !== undefined) {
             filter.price = {}
