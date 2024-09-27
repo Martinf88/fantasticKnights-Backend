@@ -7,10 +7,8 @@ import { Filter } from 'mongodb'
 
 export const userRouter: Router = express.Router();
 
-// Definiera typ för svar
 type UserResponse = WithId<UserModel>[] | { message: string };
 
-// GET alla användare
 userRouter.get('/', async (req: Request, res: Response<UserResponse>) => {
     try {
         const allUsers: WithId<UserModel>[] = await getAllUsers();
@@ -31,8 +29,8 @@ userRouter.get('/search', async (req: Request, res: Response) => {
     try {
         const { name, isAdmin } = req.query;
 
-        if (!name || (name as string).trim() === '') {
-            return res.status(400).json({ message: 'Name cannot be empty' });
+        if ((!name || (name as string).trim() === '') && isAdmin === undefined) {
+            return res.status(400).json({ message: 'Invalid search: either "name" or "isAdmin" must be provided' });
         }
 
         const filter: Filter<UserModel> = {};
@@ -84,7 +82,6 @@ userRouter.post('/', async (req: Request, res: Response) => {
     }
 });
 
-// PUT uppdatera en användare
 userRouter.put('/:id', async (req: Request, res: Response) => {
     try {
         const userId = req.params.id;
