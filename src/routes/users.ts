@@ -3,6 +3,7 @@ import { UserModel } from '../models/userModel.js';
 import { getAllUsers } from '../endpoints/users/getAllUsers.js';
 import { ObjectId, WithId } from 'mongodb';
 import { getUserCollection } from '../getDb.js';
+import { Filter } from 'mongodb'
 
 export const userRouter: Router = express.Router();
 
@@ -25,7 +26,43 @@ userRouter.get('/', async (req: Request, res: Response<UserResponse>) => {
     }  
 });
 
-// POST en ny användare
+
+userRouter.get('/search', async (req: Request, res: Response) => {
+    try {
+        const { name, isAdmin } = req.query;
+
+        if (!name || (name as string).trim() === '') {
+            return res.status(400).json({ message: 'Name cannot be empty' });
+        }
+
+        const filter: Filter<UserModel> = {};
+
+        if (name) {
+            const searchTerms = (name as string).split(' ').map(term => term.trim());
+
+            filter.$or = searchTerms.map(term => ({
+                name: { $regex: new RegExp(term, 'i') }
+            }));
+        }
+
+        if (isAdmin !== undefined) {
+            filter.isAdmin = isAdmin === 'true';
+        }
+
+        const userCol = getUserCollection();
+        const filteredUsers = await userCol.find(filter).toArray();
+
+        if (filteredUsers.length === 0) {
+            return res.status(404).json({ message: 'No matching users' });
+        }
+
+        res.status(200).json(filteredUsers);
+    } catch (error) {
+        console.error('Error searching for users:', error);
+        res.status(500).json({ message: 'Server error' });
+    }
+});
+
 userRouter.post('/', async (req: Request, res: Response) => {
     try {
         const newUser: UserModel = req.body;
