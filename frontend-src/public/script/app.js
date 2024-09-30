@@ -28,7 +28,6 @@ displayProducts()
 
 async function displayCart() {
 	const cart = await getCart()
-	console.log('extralog cart: ', cart);
 	
 	const users = await getUsers()
 	const products = await getProducts()
@@ -41,8 +40,6 @@ async function displayCart() {
 		cartItem.classList.add('cart-item')
 		
 		const user = users.find(u => u._id === cartData.userId)
-		console.log(user);
-		
 		name.textContent = `Name: ${user.name}`
 		
 		const product = products.find(p => p._id === cartData.productId)
