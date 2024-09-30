@@ -4,7 +4,7 @@ async function getCart() {
 	})
 	const data = await response.json()
 	console.log('Svar från cart: ', data);
-	
+	return data
 }
 async function getProducts() {
 	const response = await fetch('/products', {
@@ -22,7 +22,7 @@ async function getUsers() {
 	})
 	const data = await response.json()
 	console.log('Svar från users: ', data);
-	
+	return data
 }
 
 export { getCart, getProducts, getUsers }
