@@ -12,6 +12,8 @@ async function getProducts() {
 	})
 	const data = await response.json()
 	console.log('Svar från products: ', data);
+
+	return data
 	
 }
 async function getUsers() {
