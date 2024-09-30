@@ -12,7 +12,27 @@
 
 	<section>
 		<h2>Products</h2>
-		<input type="text">
+		<form action="" class="add-product-form">
+			<h1>Add new product</h1>
+			<div>
+				<label for="image">Image-URL:</label>
+				<input class="add-product-image" type="text" placeholder="image-URL" id="image">
+			</div>
+			<div>
+				<label for="name">Name:</label>
+				<input class="add-product-name" type="text" placeholder="Name" id="name">
+			</div>
+			<div>
+				<label for="price">Price:</label>
+				<input class="add-product-price" type="text" placeholder="Price" id="price">
+			</div>
+			<div>
+				<label for="stock">In stock</label>
+				<input class="add-product-in-stock" type="text" placeholder="In stock" id="stock">
+			</div>
+			<button id="add-new-product-btn">Add</button>
+		</form>
+		<input type="text" placeholder="Search products">
 		<div class="product-list">
 
 		</div>
