@@ -1,5 +1,6 @@
 // import getData from "./api"
-import { getProducts, getUsers, getCart } from "./api.js"
+import { addProduct } from "./addNewProduct.js";
+import { getProducts, getUsers, getCart, addNewProduct } from "./api.js"
 import { addEvent } from "./delete.js";
 const productsList = document.querySelector('.product-list')
 const cartList = document.querySelector('.cart-list');

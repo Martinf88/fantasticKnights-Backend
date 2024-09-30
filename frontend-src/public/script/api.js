@@ -25,7 +25,7 @@ async function getProducts() {
 	
 }
 
-async function addNewProduct() {
+async function addNewProduct(newProduct) {
 	const response = await fetch('/products', {
 		method: 'POST'
 	})
