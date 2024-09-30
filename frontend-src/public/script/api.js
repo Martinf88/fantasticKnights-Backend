@@ -1,58 +1,26 @@
-async function getUsers() {
-	const url = "http://localhost:9876"
-
-	try {
-		const response = await fetch(`${url}/users`)
-		if (!response.ok) {
-			throw new Error(`Response status: ${response.status}`)
-		}
-		const data = await response.json()
-		console.log(data);
-		return data;
-	} catch (error) {
-		console.error(error.message);
-	}
-	
-}
-
-getUsers()
-
 async function getCart() {
-	const url = "http://localhost:9876"
-
-	try {
-		const response = await fetch(`${url}/cart`)
-		if (!response.ok) {
-			throw new Error(`Response status: ${response.status}`)
-		}
-		const data = await response.json()
-		console.log(data);
-		return data;
-	} catch (error) {
-		console.error(error.message);
-	}
+	const response = await fetch('/cart', {
+		method: 'GET'
+	})
+	const data = await response.json()
+	console.log('Svar från cart: ', data);
 	
 }
-
-getCart()
-
 async function getProducts() {
-	const url = "http://localhost:9876"
-
-	try {
-		const response = await fetch(`${url}/products`)
-		if (!response.ok) {
-			throw new Error(`Response status: ${response.status}`)
-		}
-		const data = await response.json()
-		console.log(data);
-		return data;
-	} catch (error) {
-		console.error(error.message);
-	}
+	const response = await fetch('/products', {
+		method: 'GET'
+	})
+	const data = await response.json()
+	console.log('Svar från products: ', data);
+	
+}
+async function getUsers() {
+	const response = await fetch('/users', {
+		method: 'GET'
+	})
+	const data = await response.json()
+	console.log('Svar från users: ', data);
 	
 }
 
-getProducts()
-
-export {getUsers, getCart, getProducts}
+export { getCart, getProducts, getUsers }

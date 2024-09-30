@@ -1,3 +1,6 @@
-import getData from "./api"
+// import getData from "./api"
+import { getProducts, getUsers, getCart } from "./api.js"
 
-getData()
+getCart()
+getProducts()
+getUsers()

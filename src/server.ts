@@ -25,6 +25,8 @@ async function startServer() {
 		app.use('/users', userRouter)
 		app.use('/', productRouter)
 		
+		app.use( express.static('./frontend-src/public'))
+		
 		app.listen(port, () => {
 			console.log('Server is listening on port ' + port);
 		})
