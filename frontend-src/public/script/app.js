@@ -6,8 +6,6 @@ const productsList = document.querySelector('.product-list')
 const cartList = document.querySelector('.cart-list');
 const userList = document.querySelector('.user-list');
 
-// let users = []
-// let products = []
 async function displayProducts() {
 	const products = await getProducts()
 
