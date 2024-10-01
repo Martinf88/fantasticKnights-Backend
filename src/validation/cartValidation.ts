@@ -1,5 +1,6 @@
 import Joi from "joi";
 import { CartModel } from "../models/cartModel.js";
+import { getProductById, getUserById } from "../endpoints/products/getAllCartItems.js";
 
 
 const cartItemSchema: Joi.ObjectSchema<CartModel> = Joi.object<CartModel>({
@@ -14,4 +15,20 @@ const updateCartItemSchema: Joi.ObjectSchema<CartModel> = Joi.object<CartModel>(
 	amount: Joi.number().integer().greater(0).optional(),
 }).min(1)
 
-export { cartItemSchema, updateCartItemSchema } 
+
+async function validateUserAndProduct(userId: string, productId: string) {
+    const userExist = await getUserById(userId);
+    const productExist = await getProductById(productId);
+
+    if (!userExist) {
+        return { valid: false, message: 'UserId not found' };
+    }
+
+    if (!productExist) {
+        return { valid: false, message: 'ProductId not found' };
+    }
+
+    return { valid: true };
+}
+
+export { cartItemSchema, updateCartItemSchema, validateUserAndProduct } 

@@ -1,6 +1,17 @@
 import {WithId, InsertOneResult, ObjectId, UpdateResult, DeleteResult } from "mongodb";
 import { CartModel } from "../../models/cartModel.js";
 import { getCartCollection } from "../../getDb.js";
+import { getUserCollection, getProductCollection } from "../../getDb.js";
+
+async function getUserById(userId: string) {
+	const col = getUserCollection()
+	return await col.findOne({ _id: new ObjectId(userId) });
+}
+
+async function getProductById(productId: string) {
+	const col = getProductCollection()
+	return await col.findOne({ _id: new ObjectId(productId)})
+}
 
 
 async function getAllCartItems() {
@@ -53,4 +64,4 @@ async function deleteCartItem(id: string) {
 	}
 }
 
-export { getAllCartItems, addItemToCart, updateCartItem, deleteCartItem }
+export { getAllCartItems, addItemToCart, updateCartItem, deleteCartItem, getProductById, getUserById }
