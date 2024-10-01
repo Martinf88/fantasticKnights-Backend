@@ -2,6 +2,7 @@ import express, { Request, Response, Router } from 'express'
 import { ProductModel } from '../models/productModel.js'
 import { deleteProduct, getAllProducts, getFilteredProducts, postNewProduct, updateProduct } from '../endpoints/products/getAllProducts.js'
 import { WithId } from 'mongodb'
+import { validateProduct } from '../validation/validateProductModel.js'
 
 export const router: Router = express.Router()
 
@@ -34,9 +35,13 @@ router.get('/products/search', async (req: Request, res: Response<WithId<Product
     }
 })
 
+
 router.post('/products', async (req: Request, res: Response) => {
     console.log('bodycheck i router.post: ', req.body);
-    
+    const validationResult = validateProduct(req.body)
+    if(!validationResult.success) {
+        return res.status(400).json({ error: validationResult.error })
+    }
     try {
         const newProduct: ProductModel = req.body
         if(!newProduct.name || !newProduct.price || !newProduct.amountInStock || !newProduct.image) {
@@ -49,7 +54,7 @@ router.post('/products', async (req: Request, res: Response) => {
             return res.status(400).json({message: 'Price must be a number value'})
         }
         if(typeof newProduct.image !== 'string') {
-            
+            return res.status(400).json({message: 'Image must be a string'})
         }
         await postNewProduct(newProduct)
         res.status(201).json({message: 'Product added successfully'})
