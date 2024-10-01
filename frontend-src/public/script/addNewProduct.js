@@ -1,13 +1,13 @@
 import { addNewProduct } from "./api.js";
 
-const pForm = document.querySelector('.add-product-form')
 const productImg = document.querySelector('#image')
 const productName = document.querySelector('#name')
 const productPrice = document.querySelector('#price')
 const productInStock = document.querySelector('#stock')
 const addProductButton = document.querySelector('#add-new-product-btn')
 
-function addProduct() {
+function addProduct(event) {
+	event.preventDefault()
 	const newProduct = {
 		image: productImg.value,
 		name: productName.value,
@@ -18,8 +18,8 @@ function addProduct() {
 	console.log('Test av addnewproduct', newProduct);
 	
 }
-addProductButton.addEventListener('click', () => {
-	addProduct()
+addProductButton.addEventListener('click', (event) => {
+	addProduct(event)
 	
 })
 

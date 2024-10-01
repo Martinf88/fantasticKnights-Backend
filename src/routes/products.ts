@@ -35,9 +35,11 @@ router.get('/products/search', async (req: Request, res: Response<WithId<Product
 })
 
 router.post('/products', async (req: Request, res: Response) => {
+    console.log('bodycheck i router.post: ', req.body);
+    
     try {
         const newProduct: ProductModel = req.body
-        if(!newProduct.name || !newProduct.price || !newProduct.amountInStock) {
+        if(!newProduct.name || !newProduct.price || !newProduct.amountInStock || !newProduct.image) {
             return res.status(400).json({message: 'Missing required fields: name, price and ammountInStock need to be filled in'})
         }
         if(typeof newProduct.name !== 'string') {

@@ -27,7 +27,11 @@ async function getProducts() {
 
 async function addNewProduct(newProduct) {
 	const response = await fetch('/products', {
-		method: 'POST'
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify(newProduct)
 	})
 	const data = await response.json()
 	console.log('Svar från addNewProduct', data);
