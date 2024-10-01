@@ -6,6 +6,14 @@ async function getCart() {
 	console.log('Svar från cart: ', data);
 	return data
 }
+async function deleteCartItem(id) {
+	const response = await fetch(`/cart/${id}`, {
+		method: 'DELETE'
+	})
+	// const data = await response.json()
+	await getCart()
+	
+}
 async function getProducts() {
 	const response = await fetch('/products', {
 		method: 'GET'
@@ -16,6 +24,18 @@ async function getProducts() {
 	return data
 	
 }
+
+async function addNewProduct(newProduct) {
+	const response = await fetch('/products', {
+		method: 'POST'
+	})
+	const data = await response.json()
+	console.log('Svar från addNewProduct', data);
+	
+	return data
+}
+
+
 async function getUsers() {
 	const response = await fetch('/users', {
 		method: 'GET'
@@ -25,4 +45,4 @@ async function getUsers() {
 	return data
 }
 
-export { getCart, getProducts, getUsers }
+export { getCart, getProducts, getUsers, deleteCartItem, addNewProduct }
