@@ -42,8 +42,9 @@ cartRouter.post('/', async (req: Request, res: Response) => {
 		if (!ObjectId.isValid(newCartItem.userId) || !ObjectId.isValid(newCartItem.productId)) {
             return res.status(400).json({ message: 'Invalid userId or productId' });
         }
-
-		    //TODO: Kontrollera om userId och productId finns i databasen
+		
+		const userExist = await getUserById(newCartItem.userId)
+		const productExist = await getProductById(newCartItem.productId)
 
 		await addItemToCart(newCartItem)
 
@@ -58,7 +59,6 @@ cartRouter.post('/', async (req: Request, res: Response) => {
 //PUT
 cartRouter.put('/:id', async (req: Request, res: Response) => {
 		try {
-
 			const { error, value } = updateCartItemSchema.validate(req.body);
 			if (error) {
 				return res.status(400).json({ message: error.details[0].message });
