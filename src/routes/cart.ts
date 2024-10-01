@@ -3,6 +3,8 @@ import { addItemToCart, getAllCartItems, updateCartItem, deleteCartItem } from "
 import { ObjectId, WithId } from "mongodb";
 import { CartModel } from "../models/cartModel.js";
 import {cartItemSchema, updateCartItemSchema} from "../validation/cartValidation.js";
+import { validateUserAndProduct } from "../validation/cartValidation.js";
+
 
 export const cartRouter: Router = express.Router()
 
@@ -31,8 +33,11 @@ cartRouter.post('/', async (req: Request, res: Response) => {
 		if (!ObjectId.isValid(newCartItem.userId) || !ObjectId.isValid(newCartItem.productId)) {
             return res.status(400).json({ message: 'Invalid userId or productId' });
         }
-
-		    //TODO: Kontrollera om userId och productId finns i databasen
+		
+		const validation = await validateUserAndProduct(newCartItem.userId, newCartItem.productId);
+        if (!validation.valid) {
+            return res.status(404).json({ message: validation.message });
+        }
 
 		await addItemToCart(newCartItem)
 
@@ -47,14 +52,20 @@ cartRouter.post('/', async (req: Request, res: Response) => {
 //PUT
 cartRouter.put('/:id', async (req: Request, res: Response) => {
 		try {
-
 			const { error, value } = updateCartItemSchema.validate(req.body);
 			if (error) {
 				return res.status(400).json({ message: error.details[0].message });
 			}
 
-			if (!ObjectId.isValid(req.params.id)) {
+			const { userId, productId } = value;
+
+			if (!ObjectId.isValid(req.params.id) || !ObjectId.isValid(userId) || !ObjectId.isValid(productId)) {
 				return res.status(400).json({ message: 'Invalid ID' });
+			}
+
+			const validation = await validateUserAndProduct(userId, productId);
+			if (!validation.valid) {
+				return res.status(404).json({ message: validation.message });
 			}
 
 			const result = await updateCartItem(req.params.id, value);
