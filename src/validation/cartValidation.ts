@@ -16,7 +16,13 @@ const updateCartItemSchema: Joi.ObjectSchema<CartModel> = Joi.object<CartModel>(
 }).min(1)
 
 
-async function validateUserAndProduct(userId: string, productId: string) {
+async function validateUserAndProduct(userId: string, productId: string): Promise<{
+    valid: boolean;
+    message: string;
+} | {
+    valid: boolean;
+    message?: undefined;
+}> {
     const userExist = await getUserById(userId);
     const productExist = await getProductById(productId);
 
