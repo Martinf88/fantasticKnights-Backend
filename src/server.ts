@@ -5,6 +5,7 @@ import { userRouter } from "./routes/users.js"
 import { router as productRouter } from './routes/products.js'
 import { getDb } from "./getDb.js";
 
+
 const app: Express = express()
 const port = 9876
 
