@@ -1,7 +1,7 @@
 // import getData from "./api"
 import { addProduct } from "./addNewProduct.js";
-import { getProducts, getUsers, getCart, addNewProduct } from "./api.js"
-import { addEvent } from "./delete.js";
+import { getProducts, getUsers, getCart } from "./api.js"
+import { addEvent, deleteProductEvent } from "./delete.js";
 const productsList = document.querySelector('.product-list')
 const cartList = document.querySelector('.cart-list');
 const userList = document.querySelector('.user-list');
@@ -22,6 +22,7 @@ async function displayProducts() {
 		img.classList.add('product-img')
 		productItem.classList.add('product-item')
 		deleteButton.classList.add('product-delete-button')
+		deleteButton.setAttribute('data-id', product._id)
 
 		img.src = product.image
 		deleteButton.innerText = 'Delete Item'
@@ -36,6 +37,7 @@ async function displayProducts() {
 		productItem.append(deleteButton)
 		productsList.appendChild(productItem)
 	});	
+	deleteProductEvent()
 }
 displayProducts()
 
