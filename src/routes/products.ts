@@ -43,23 +43,13 @@ router.post('/products', async (req: Request, res: Response) => {
         return res.status(400).json({ error: validationResult.error })
     }
     try {
-        const newProduct: ProductModel = req.body
-        if(!newProduct.name || !newProduct.price || !newProduct.amountInStock || !newProduct.image) {
-            return res.status(400).json({message: 'Missing required fields: name, price and ammountInStock need to be filled in'})
-        }
-        if(typeof newProduct.name !== 'string') {
-            return res.status(400).json({message: 'Name must be a string value'})
-        }
-        if(typeof newProduct.price !== 'number') {
-            return res.status(400).json({message: 'Price must be a number value'})
-        }
-        if(typeof newProduct.image !== 'string') {
-            return res.status(400).json({message: 'Image must be a string'})
-        }
+        const newProduct: ProductModel = validationResult.value[0]
+
         await postNewProduct(newProduct)
         res.status(201).json({message: 'Product added successfully'})
     } catch(error) {
         console.error('Error in adding product', error)
+        res.status(500).json({ error: 'Server electrocuted!'})
     }
 })
 
