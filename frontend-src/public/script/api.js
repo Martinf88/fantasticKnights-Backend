@@ -1,0 +1,28 @@
+async function getCart() {
+	const response = await fetch('/cart', {
+		method: 'GET'
+	})
+	const data = await response.json()
+	console.log('Svar från cart: ', data);
+	return data
+}
+async function getProducts() {
+	const response = await fetch('/products', {
+		method: 'GET'
+	})
+	const data = await response.json()
+	console.log('Svar från products: ', data);
+
+	return data
+	
+}
+async function getUsers() {
+	const response = await fetch('/users', {
+		method: 'GET'
+	})
+	const data = await response.json()
+	console.log('Svar från users: ', data);
+	return data
+}
+
+export { getCart, getProducts, getUsers }

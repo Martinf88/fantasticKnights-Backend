@@ -6,15 +6,6 @@ import { CartModel } from "../models/cartModel.js";
 
 export const cartRouter: Router = express.Router()
 
-declare global {
-	namespace Express {
-	  interface Request {
-		db: Db; // Typen för din MongoDB-databas
-	  }
-	}
-  }
-
-
 //GET
 cartRouter.get('/', async (req: Request, res: Response<WithId<CartModel>[]>) => {
 	try {
@@ -77,13 +68,15 @@ cartRouter.put('/:id', async (req: Request, res: Response) => {
 //DELETE
 cartRouter.delete('/:id', async (req: Request, res: Response) => {
 
-	//TODO: VALIDERING
 	try {
 		const cartItemId = req.params.id
+
 		if(!ObjectId.isValid(cartItemId)){
 			return res.status(400).json({message: 'Invalid ID'})
 		}
+
 		const result = await deleteCartItem(req.params.id);
+
 		if(result.deletedCount === 0) {
 			return res.status(404).json({ message: 'Item not found' })
 		}

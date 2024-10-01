@@ -1,4 +1,5 @@
 import express, { Express, NextFunction, Request, Response } from "express";
+import cors from 'cors'
 import { cartRouter } from "./routes/cart.js";
 import { userRouter } from "./routes/users.js"
 import { router as productRouter } from './routes/products.js'
@@ -10,6 +11,7 @@ const port = 9876
 async function startServer() {
 	try {
 		await getDb()
+		app.use( cors() ) 
 		console.log("Database connected successfully");
 
 		app.use(express.json())
@@ -18,12 +20,12 @@ async function startServer() {
 			console.log(`${req.method} ${req.url}`, req.body);
 			next()
 		})
-		
-		app.use(express.json());
 
 		app.use('/cart', cartRouter)
 		app.use('/users', userRouter)
 		app.use('/', productRouter)
+		
+		app.use( express.static('./frontend-src/public'))
 		
 		app.listen(port, () => {
 			console.log('Server is listening on port ' + port);
