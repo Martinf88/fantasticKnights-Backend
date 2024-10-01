@@ -3,6 +3,17 @@ import { addItemToCart, getAllCartItems, updateCartItem, deleteCartItem } from "
 import { ObjectId, WithId } from "mongodb";
 import { CartModel } from "../models/cartModel.js";
 import {cartItemSchema, updateCartItemSchema} from "../validation/cartValidation.js";
+import { getProductCollection, getUserCollection } from "../getDb.js";
+
+async function getUserById(userId: string) {
+	const col = getUserCollection()
+	return await col.findOne({ _id: new ObjectId(userId) });
+}
+
+async function getProductById(productId: string) {
+	const col = getProductCollection()
+	return await col.findOne({ _id: new ObjectId(productId)})
+}
 
 export const cartRouter: Router = express.Router()
 
@@ -53,9 +64,25 @@ cartRouter.put('/:id', async (req: Request, res: Response) => {
 				return res.status(400).json({ message: error.details[0].message });
 			}
 
-			if (!ObjectId.isValid(req.params.id)) {
+			const { userId, productId } = value;
+
+			if (!ObjectId.isValid(req.params.id) || !ObjectId.isValid(userId) || !ObjectId.isValid(productId)) {
 				return res.status(400).json({ message: 'Invalid ID' });
 			}
+
+			const userExist = await getUserById(userId)
+			const productExist = await getProductById(productId)
+
+			if (!userExist) {
+				return res.status(404).json({ message: 'UserId not found'})
+			}
+
+			if (!productExist) {
+				return res.status(404).json({ message: 'ProductId not found'})
+			}
+
+			console.log('Updating cart item:', req.params.id);
+			console.log('Update data:', value); 
 
 			const result = await updateCartItem(req.params.id, value);
 

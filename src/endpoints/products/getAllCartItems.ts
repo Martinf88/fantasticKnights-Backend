@@ -26,12 +26,12 @@ async function addItemToCart(newCartItem: CartModel): Promise<InsertOneResult<Ca
 	}
 }
 
-async function updateCartItem(id: string, amount: number) {
+async function updateCartItem(id: string, updateData: Partial<CartModel>) {
 	const col = getCartCollection();
 	try {
 		const result: UpdateResult = await col.updateOne(
 			{ _id: new ObjectId(id) },
-			{ $set: { amount } }
+			{ $set: updateData }
 		)
 		return result
 	} catch (error) {
