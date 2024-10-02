@@ -1,7 +1,9 @@
 import express, { Router, Request, Response } from "express";
 import { addItemToCart, getAllCartItems, updateCartItem, deleteCartItem } from "../endpoints/products/getAllCartItems.js";
-import { ObjectId, WithId, Db } from "mongodb";
+import { ObjectId, WithId } from "mongodb";
 import { CartModel } from "../models/cartModel.js";
+import {cartItemSchema, updateCartItemSchema} from "../validation/cartValidation.js";
+import { validateUserAndProduct } from "../validation/cartValidation.js";
 
 
 export const cartRouter: Router = express.Router()
@@ -21,24 +23,26 @@ cartRouter.get('/', async (req: Request, res: Response<WithId<CartModel>[]>) => 
 //POST
 cartRouter.post('/', async (req: Request, res: Response) => {
 	try {
-		const newCartItem: CartModel = req.body;
-
-		if(!newCartItem.userId || !newCartItem.productId || typeof newCartItem.amount !== 'number') {
-			return res.status(400).json({ message: 'Missing required fields: userId, productId or amount'})
+		const { error, value } = cartItemSchema.validate(req.body)
+		if (error) {
+			return res.status(400).json({ message: error.details[0].message})
 		}
+
+		const newCartItem: CartModel = value;
 
 		if (!ObjectId.isValid(newCartItem.userId) || !ObjectId.isValid(newCartItem.productId)) {
             return res.status(400).json({ message: 'Invalid userId or productId' });
         }
-
-		if (newCartItem.amount <= 0) {
-			return res.status(400).json({ message: 'Amount must be a positive number' });
-		}
-
-		    //TODO: Kontrollera om userId och productId finns i databasen
+		
+		const validation = await validateUserAndProduct(newCartItem.userId, newCartItem.productId);
+        if (!validation.valid) {
+            return res.status(404).json({ message: validation.message });
+        }
 
 		await addItemToCart(newCartItem)
+
 		res.status(201).json({ message: 'Item added successfully'})
+
 	} catch (error) {
 		console.error('Error adding item ', error);
 		
@@ -47,12 +51,24 @@ cartRouter.post('/', async (req: Request, res: Response) => {
 })
 //PUT
 cartRouter.put('/:id', async (req: Request, res: Response) => {
-	const {amount} = req.body;
-	if (typeof amount !== 'number' || amount <= 0) {
-        return res.status(400).json({ message: 'Invalid data: amount must be a positive number' });
-    }
 		try {
-			const result = await updateCartItem(req.params.id, amount);
+			const { error, value } = updateCartItemSchema.validate(req.body);
+			if (error) {
+				return res.status(400).json({ message: error.details[0].message });
+			}
+
+			const { userId, productId } = value;
+
+			if (!ObjectId.isValid(req.params.id) || !ObjectId.isValid(userId) || !ObjectId.isValid(productId)) {
+				return res.status(400).json({ message: 'Invalid ID' });
+			}
+
+			const validation = await validateUserAndProduct(userId, productId);
+			if (!validation.valid) {
+				return res.status(404).json({ message: validation.message });
+			}
+
+			const result = await updateCartItem(req.params.id, value);
 
 
 			if (result.matchedCount === 0) {

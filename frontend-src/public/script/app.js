@@ -1,43 +1,28 @@
 // import getData from "./api"
 import { addProduct } from "./addNewProduct.js";
-import { getProducts, getUsers, getCart, addNewProduct } from "./api.js"
-import { addEvent } from "./delete.js";
+import { getProducts, getUsers, getCart, getFilteredProducts } from "./api.js"
+import { addEvent, deleteProductEvent } from "./delete.js";
+import { displaySingleProduct } from "./displayProducts.js";
 const productsList = document.querySelector('.product-list')
 const cartList = document.querySelector('.cart-list');
 const userList = document.querySelector('.user-list');
+const productSearch = document.querySelector('.search-product-input')
 
-// let users = []
-// let products = []
 async function displayProducts() {
 	const products = await getProducts()
 
-	products.forEach(product => {
-		const productItem = document.createElement('div');
-		const img = document.createElement('img')
-		const name = document.createElement('h3');
-		const price = document.createElement('p');
-		const inStock = document.createElement('p');
-		const deleteButton = document.createElement('button')
-
-		img.classList.add('product-img')
-		productItem.classList.add('product-item')
-		deleteButton.classList.add('product-delete-button')
-
-		img.src = product.image
-		deleteButton.innerText = 'Delete Item'
-		name.textContent = product.name
-		price.textContent = `$${product.price}`
-		inStock.textContent = `In stock: ${product.amountInStock}`
-
-		productItem.appendChild(img)
-		productItem.appendChild(name)
-		productItem.appendChild(price)
-		productItem.appendChild(inStock)
-		productItem.append(deleteButton)
-		productsList.appendChild(productItem)
-	});	
+	products.forEach(displaySingleProduct)
+	deleteProductEvent()
 }
 displayProducts()
+
+productSearch.addEventListener('input', async () => {
+	if (productSearch.value.length > 0) {
+		const result = await getFilteredProducts(productSearch.value)
+		productsList.innerHTML = ''
+		result.forEach(displaySingleProduct)
+	}	
+})
 
 async function displayCart() {
 	const cart = await getCart()	
