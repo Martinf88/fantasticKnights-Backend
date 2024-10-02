@@ -22,6 +22,9 @@ router.get('/products', async (req: Request, res: Response<WithId<ProductModel>[
 router.get('/products/search', async (req: Request, res: Response<WithId<ProductModel>[]>) => {
     try {
         const { name, maxPrice, minPrice } = req.query
+        if(name === undefined || name === "") {
+            return res.sendStatus(400)
+        }
         const filteredProducts: WithId<ProductModel>[] = await getFilteredProducts({
             name: name as string | undefined,
             maxPrice: maxPrice ? Number(maxPrice): undefined,
@@ -31,7 +34,7 @@ router.get('/products/search', async (req: Request, res: Response<WithId<Product
 
     } catch(error) {
         console.log('Error in getting filtered items products.ts', error);    
-        res.status(500)    
+        res.sendStatus(500)    
     }
 })
 
