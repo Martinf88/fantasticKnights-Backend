@@ -235,3 +235,24 @@ body {
 .edit-button:hover {
     background-color: #0056b3; 
 }
+
+.edit-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7); /* Mörk bakgrund */
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Ligger ovanför alla andra element */
+}
+
+.edit-user-form {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    width: 400px;
+}
