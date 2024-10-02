@@ -1,6 +1,7 @@
 import Joi from "joi";
 import { CartModel } from "../models/cartModel.js";
 import { getProductById, getUserById } from "../endpoints/products/getAllCartItems.js";
+import { ObjectId } from "mongodb";
 
 
 const cartItemSchema: Joi.ObjectSchema<CartModel> = Joi.object<CartModel>({
@@ -37,4 +38,22 @@ async function validateUserAndProduct(userId: string, productId: string): Promis
     return { valid: true };
 }
 
-export { cartItemSchema, updateCartItemSchema, validateUserAndProduct } 
+async function validateCartItem(cartItem: CartModel) {
+    const { error, value } = cartItemSchema.validate(cartItem);
+    if (error) {
+        return { valid: false, message: error.details[0].message };
+    }
+
+    if (!ObjectId.isValid(cartItem.userId) || !ObjectId.isValid(cartItem.productId)) {
+        return { valid: false, message: 'Invalid userId or productId' };
+    }
+
+    const validation = await validateUserAndProduct(cartItem.userId, cartItem.productId);
+    if (!validation.valid) {
+        return { valid: false, message: validation.message };
+    }
+
+    return { valid: true, value };
+}
+
+export { cartItemSchema, updateCartItemSchema, validateUserAndProduct, validateCartItem } 
