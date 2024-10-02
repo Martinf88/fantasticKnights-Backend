@@ -2,6 +2,7 @@ import express, { Request, Response, Router } from 'express'
 import { ProductModel } from '../models/productModel.js'
 import { deleteProduct, getAllProducts, getFilteredProducts, postNewProduct, updateProduct } from '../endpoints/products/getAllProducts.js'
 import { WithId } from 'mongodb'
+import { validateProduct } from '../validation/validateProductModel.js'
 
 export const router: Router = express.Router()
 
@@ -12,7 +13,7 @@ router.get('/products', async (req: Request, res: Response<WithId<ProductModel>[
         
     } catch(error) {
         console.log('Error in getting all items products.ts', error);
-        res.status(500)
+        res.status(500).json({ error: 'Server got fried!'})
         
     }
 
@@ -34,27 +35,21 @@ router.get('/products/search', async (req: Request, res: Response<WithId<Product
     }
 })
 
+
 router.post('/products', async (req: Request, res: Response) => {
     console.log('bodycheck i router.post: ', req.body);
-    
+    const validationResult = validateProduct(req.body)
+    if(!validationResult.success) {
+        return res.status(400).json({ error: validationResult.error })
+    }
     try {
-        const newProduct: ProductModel = req.body
-        if(!newProduct.name || !newProduct.price || !newProduct.amountInStock || !newProduct.image) {
-            return res.status(400).json({message: 'Missing required fields: name, price and ammountInStock need to be filled in'})
-        }
-        if(typeof newProduct.name !== 'string') {
-            return res.status(400).json({message: 'Name must be a string value'})
-        }
-        if(typeof newProduct.price !== 'number') {
-            return res.status(400).json({message: 'Price must be a number value'})
-        }
-        if(typeof newProduct.image !== 'string') {
-            
-        }
+        const newProduct: ProductModel = validationResult.value[0]
+
         await postNewProduct(newProduct)
         res.status(201).json({message: 'Product added successfully'})
     } catch(error) {
         console.error('Error in adding product', error)
+        res.status(500).json({ error: 'Server electrocuted!'})
     }
 })
 
