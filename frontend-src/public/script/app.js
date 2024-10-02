@@ -94,14 +94,10 @@ closeEditFormButton.addEventListener('click', () => {
 
   document.querySelector('.user-list').addEventListener('click', async (e) => {
 	if (e.target.classList.contains('edit-button')) {
+		
 	  const userId = e.target.getAttribute('data-id');
-	  console.log(`Edit button clicked for user with ID: ${userId}`);
-
 	  const users = await getUsers();
-	  console.log('Users data fetched: ', users);
-
 	  const user = users.find(u => u._id === userId);
-	  console.log('User found for edit: ', user);
   
 	  editFormUsername.value = user.name;
 	  editFormAdmin.value = user.isAdmin.toString();
