@@ -6,13 +6,13 @@ import { getProductById, getUserById } from "../endpoints/products/getAllCartIte
 const cartItemSchema: Joi.ObjectSchema<CartModel> = Joi.object<CartModel>({
 	productId: Joi.string().required(),
 	userId: Joi.string().required(),
-	amount: Joi.number().integer().greater(0).required(),
+	amount: Joi.number().integer().greater(0).required().strict(),
 })
 
 const updateCartItemSchema: Joi.ObjectSchema<CartModel> = Joi.object<CartModel>({
 	productId: Joi.string().optional(),
 	userId: Joi.string().optional(),
-	amount: Joi.number().integer().greater(0).optional(),
+	amount: Joi.number().integer().greater(0).optional().strict(),
 }).min(1)
 
 
