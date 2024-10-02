@@ -13,7 +13,7 @@ router.get('/products', async (req: Request, res: Response<WithId<ProductModel>[
         
     } catch(error) {
         console.log('Error in getting all items products.ts', error);
-        res.status(500).json({ error: 'Server got fried!'})
+        res.status(500)
         
     }
 

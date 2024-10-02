@@ -26,6 +26,15 @@ async function getProducts() {
 	return data
 	
 }
+async function getFilteredProducts(name) {
+	const response = await fetch(`/products/search?name=${name}`, {
+		method: 'GET'
+	})
+	const data = await response.json()
+	console.log('Svar från addNewProduct', data);
+	
+	return data
+}
 
 async function addNewProduct(newProduct) {
 	const response = await fetch('/products', {
@@ -60,4 +69,4 @@ async function getUsers() {
 	return data
 }
 
-export { getCart, getProducts, getUsers, deleteCartItem, addNewProduct, deleteProduct }
+export { getCart, getProducts, getUsers, deleteCartItem, addNewProduct, deleteProduct, getFilteredProducts }
