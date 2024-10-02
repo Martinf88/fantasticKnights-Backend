@@ -1,7 +1,7 @@
 // import getData from "./api"
-import { addProduct } from "./addNewProduct.js";
 import { getProducts, getUsers, getCart, getFilteredProducts, getFilteredUsers, updateUser } from "./api.js"
 import { addEvent, deleteProductEvent } from "./delete.js";
+import { displaySingelCartItem, displaySingleProduct } from "./displayProducts.js";
 import { displaySingleProduct } from "./displayProducts.js";
 import { displaySingleUsers } from "./displaySingleUsers.js";
 
@@ -18,8 +18,14 @@ const closeEditFormButton = document.querySelector('.close-edit');
 const editOverlay = document.querySelector('.edit-overlay')
 
 
+let products = []
+
+async function loadProducts() {
+	products = await getProducts()
+}
+
 async function displayProducts() {
-	const products = await getProducts()
+	await loadProducts()
 
 	products.forEach(displaySingleProduct)
 	deleteProductEvent()
@@ -37,33 +43,13 @@ productSearch.addEventListener('input', async () => {
 async function displayCart() {
 	const cart = await getCart()	
 	const users = await getUsers()
-	const products = await getProducts()
+
 
 	cart.forEach(cartData => {
-		const cartItem = document.createElement('div')
-		const name = document.createElement('h4')
-		const boughtProduct = document.createElement('h4')
-		const amount = document.createElement('p')
-		const deleteButton = document.createElement('button')
-		cartItem.classList.add('cart-item')
-		deleteButton.classList.add('cart-delete-button')
-		deleteButton.innerText = 'Delete'
-		deleteButton.setAttribute('data-id', cartData._id)
-		
-		const user = users.find(u => u._id === cartData.userId)
-		name.textContent = `Name: ${user.name}`
-		
-		const product = products.find(p => p._id === cartData.productId)
-		boughtProduct.textContent = `Product: ${product.name}`
-
-		amount.textContent = `Amount: ${cartData.amount}`
-		cartItem.appendChild(name)
-		cartItem.appendChild(boughtProduct)
-		cartItem.appendChild(amount)
-		cartItem.appendChild(deleteButton)
+		const cartItem = displaySingelCartItem(cartData, users, products)
 		cartList.appendChild(cartItem)
-
 	})
+
 	addEvent()
 }
 displayCart()

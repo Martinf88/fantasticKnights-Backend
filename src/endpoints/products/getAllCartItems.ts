@@ -2,19 +2,21 @@ import {WithId, InsertOneResult, ObjectId, UpdateResult, DeleteResult } from "mo
 import { CartModel } from "../../models/cartModel.js";
 import { getCartCollection } from "../../getDb.js";
 import { getUserCollection, getProductCollection } from "../../getDb.js";
+import { UserModel } from "../../models/userModel.js";
+import { ProductModel } from "../../models/productModel.js";
 
-async function getUserById(userId: string) {
+async function getUserById(userId: string): Promise<WithId<UserModel> | null> {
 	const col = getUserCollection()
 	return await col.findOne({ _id: new ObjectId(userId) });
 }
 
-async function getProductById(productId: string) {
+async function getProductById(productId: string): Promise<WithId<ProductModel> | null> {
 	const col = getProductCollection()
 	return await col.findOne({ _id: new ObjectId(productId)})
 }
 
 
-async function getAllCartItems() {
+async function getAllCartItems(): Promise<WithId<CartModel>[]> {
     const col = getCartCollection();
     try {
         const result: WithId<CartModel>[] = await col.find({}).toArray();
@@ -37,7 +39,7 @@ async function addItemToCart(newCartItem: CartModel): Promise<InsertOneResult<Ca
 	}
 }
 
-async function updateCartItem(id: string, updateData: Partial<CartModel>) {
+async function updateCartItem(id: string, updateData: Partial<CartModel>): Promise<UpdateResult<Document>> {
 	const col = getCartCollection();
 	try {
 		const result: UpdateResult = await col.updateOne(
@@ -51,7 +53,7 @@ async function updateCartItem(id: string, updateData: Partial<CartModel>) {
 	}
 }
 
-async function deleteCartItem(id: string) {
+async function deleteCartItem(id: string): Promise<DeleteResult> {
 	const col = getCartCollection();
 	try {
 		const result: DeleteResult = await col.deleteOne(
