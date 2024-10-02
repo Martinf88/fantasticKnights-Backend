@@ -2,7 +2,6 @@
 import { getProducts, getUsers, getCart, getFilteredProducts, getFilteredUsers, updateUser } from "./api.js"
 import { addEvent, deleteProductEvent } from "./delete.js";
 import { displaySingelCartItem, displaySingleProduct } from "./displayProducts.js";
-import { displaySingleProduct } from "./displayProducts.js";
 import { displaySingleUsers } from "./displaySingleUsers.js";
 
 
