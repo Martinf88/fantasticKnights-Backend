@@ -1,9 +1,7 @@
 // import getData from "./api"
 import { getProducts, getUsers, getCart, getFilteredProducts, getFilteredUsers, updateUser } from "./api.js"
 import { addEvent, deleteProductEvent } from "./delete.js";
-import { displaySingelCartItem, displaySingleProduct } from "./displayProducts.js";
-import { displaySingleUsers } from "./displaySingleUsers.js";
-
+import { displaySingelCartItem, displaySingleProduct, displaySingleUsers} from "./displayProducts.js";
 
 const productsList = document.querySelector('.product-list')
 const cartList = document.querySelector('.cart-list');
@@ -54,9 +52,12 @@ async function displayCart() {
 displayCart()
 
 async function displayUsers() {
-	const users = await getUsers()
-
-	users.forEach(displaySingleUsers)
+	try {
+		const users = await getUsers()
+		users.forEach(displaySingleUsers)
+	} catch (error) {
+		console.error('Error loading users:', error);
+	}
 }
 displayUsers()
 
@@ -73,7 +74,7 @@ userSearch.addEventListener('input', async () => {
 })
 
 closeEditFormButton.addEventListener('click', () => {
-	editForm.style.display = 'none';
+	editOverlay.classList.remove('show')
   });
 
 
