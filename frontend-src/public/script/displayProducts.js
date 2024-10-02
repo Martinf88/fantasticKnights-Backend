@@ -1,4 +1,5 @@
 const productsList = document.querySelector('.product-list')
+const cartList = document.querySelector('.cartData-list')
 
 export function displaySingleProduct(product) {
 		const productItem = document.createElement('div');
@@ -26,4 +27,32 @@ export function displaySingleProduct(product) {
 		productItem.append(deleteButton)
 		productsList.appendChild(productItem)
 	
+}
+
+export function displaySingelCartItem(cartData, users, products) {
+		const cartItem = document.createElement('div')
+		const name = document.createElement('h4')
+		const boughtProduct = document.createElement('h4')
+		const amount = document.createElement('p')
+		const deleteButton = document.createElement('button')
+
+		cartItem.classList.add('cart-item')
+		deleteButton.classList.add('cart-delete-button')
+		deleteButton.innerText = 'Delete'
+		deleteButton.setAttribute('data-id', cartData._id)
+		
+		const user = users.find(u => u._id === cartData.userId)
+		name.textContent = `Name: ${user.name}`
+		
+		const product = products.find(p => p._id === cartData.productId)
+		boughtProduct.textContent = `Product: ${product.name}`
+
+		amount.textContent = `Amount: ${cartData.amount}`
+
+		cartItem.appendChild(name)
+		cartItem.appendChild(boughtProduct)
+		cartItem.appendChild(amount)
+		cartItem.appendChild(deleteButton)
+		
+		return cartItem;
 }
