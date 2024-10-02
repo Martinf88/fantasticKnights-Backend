@@ -2,7 +2,7 @@ import express, { Request, Response, Router } from 'express'
 import { ProductModel } from '../models/productModel.js'
 import { deleteProduct, getAllProducts, getFilteredProducts, postNewProduct, updateProduct } from '../endpoints/products/getAllProducts.js'
 import { WithId } from 'mongodb'
-import { validateProduct } from '../validation/validateProductModel.js'
+import { validateProduct, validatePutProduct } from '../validation/validateProductModel.js'
 
 export const router: Router = express.Router()
 
@@ -37,7 +37,6 @@ router.get('/products/search', async (req: Request, res: Response<WithId<Product
 
 
 router.post('/products', async (req: Request, res: Response) => {
-    console.log('bodycheck i router.post: ', req.body);
     const validationResult = validateProduct(req.body)
     if(!validationResult.success) {
         return res.status(400).json({ error: validationResult.error })
@@ -54,9 +53,16 @@ router.post('/products', async (req: Request, res: Response) => {
 })
 
 router.put('/products/:id', async (req: Request, res: Response) => {
+
     try {
         const {id} = req.params
         const updatedProduct: Partial<ProductModel> = req.body
+        const validationResult = validatePutProduct(updatedProduct as ProductModel, id)
+
+        if(!validationResult.success) {
+            return res.status(400).json({ message: validationResult.error})
+        }
+
         if (Object.keys(updatedProduct).length === 0) {
             return res.status(400).json({message: 'No fields to update'})
         }
