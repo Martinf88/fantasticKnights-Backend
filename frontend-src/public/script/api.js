@@ -70,4 +70,33 @@ async function getUsers() {
 	return data
 }
 
-export { getCart, getProducts, getUsers, deleteCartItem, addNewProduct, deleteProduct, getFilteredProducts }
+async function getFilteredUsers(name) {
+	const response = await fetch(`/users/search?name=${name}`, {
+		method: 'GET'
+	})
+	const data = await response.json()
+	console.log('Svar från getFilteredUsers', data);
+	
+	return data
+}
+
+async function updateUser(userId, updatedUser) {
+    const response = await fetch(`/users/${userId}`, {
+        method: 'PUT', 
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(updatedUser),
+    });
+
+    if (!response.ok) {
+        throw new Error('Failed to update user');
+    }
+
+    const data = await response.json();
+    console.log('User updated:', data);
+    return data; 
+}
+
+
+export { getCart, getProducts, getUsers, deleteCartItem, addNewProduct, deleteProduct, getFilteredProducts, getFilteredUsers, updateUser }
