@@ -26,6 +26,7 @@ async function getProducts() {
 	return data
 	
 }
+// 
 async function getFilteredProducts(name) {
 	const response = await fetch(`/products/search?name=${name}`, {
 		method: 'GET'
