@@ -1,6 +1,6 @@
 // import getData from "./api"
 import { addProduct } from "./addNewProduct.js";
-import { getProducts, getUsers, getCart, getFilteredProducts } from "./api.js"
+import { getProducts, getUsers, getCart, getFilteredProducts, getFilteredUsers } from "./api.js"
 import { addEvent, deleteProductEvent } from "./delete.js";
 import { displaySingleProduct } from "./displayProducts.js";
 import { displaySingleUsers } from "./displaySingleUsers.js";
@@ -8,8 +8,10 @@ import { displaySingleUsers } from "./displaySingleUsers.js";
 
 const productsList = document.querySelector('.product-list')
 const cartList = document.querySelector('.cart-list');
-const userList = document.querySelector('.user-list');
+const userList = document.querySelector('.user-list')
 const productSearch = document.querySelector('.search-product-input')
+const userSearch = document.querySelector('.search-user-input')
+
 
 async function displayProducts() {
 	const products = await getProducts()
@@ -61,36 +63,21 @@ async function displayCart() {
 }
 displayCart()
 
-// async function displayUsers() {
-// 	const users = await getUsers(); 
-
-// 	users.forEach(userData => {
-// 		const userItem = document.createElement('div');
-// 		const userName = document.createElement('h4');
-// 		const userAdmin = document.createElement('p');
-// 		const editButton = document.createElement('button');
-
-// 		userItem.classList.add('user-item');
-// 		editButton.classList.add('edit-button');
-// 		editButton.innerText = 'Edit';
-// 		editButton.setAttribute('data-id', userData._id);
-
-// 		userName.textContent = `User: ${userData.name}`; 
-// 		userAdmin.textContent = `Admin: ${userData.isAdmin}`; 
-
-// 		userItem.appendChild(userName);
-// 		userItem.appendChild(userAdmin);
-// 		userItem.appendChild(editButton);
-
-// 		userList.appendChild(userItem); 
-// 	});
-// }
-
-// displayUsers();
-
 async function displayUsers() {
 	const users = await getUsers()
 
 	users.forEach(displaySingleUsers)
 }
 displayUsers()
+
+userSearch.addEventListener('input', async () => {
+	if (userSearch.value.length > 0) {
+		const result = await getFilteredUsers(userSearch.value)
+		userList.innerHTML = ''
+		result.forEach(displaySingleUsers)
+
+	} else {
+		userList.innerHTML = ''
+		displayUsers()
+	}
+})
