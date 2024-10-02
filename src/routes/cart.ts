@@ -9,14 +9,14 @@ import { validateUserAndProduct } from "../validation/cartValidation.js";
 export const cartRouter: Router = express.Router()
 
 //GET
-cartRouter.get('/', async (req: Request, res: Response<WithId<CartModel>[]>) => {
+cartRouter.get('/', async (req: Request, res: Response<WithId<CartModel>[] | { message: string}>) => {
 	try {
 		const allCartItems:  WithId<CartModel>[] = await getAllCartItems()
-		res.send(allCartItems)
+		res.status(200).send(allCartItems)
 
 	} catch (error) {
 		console.error('Error fetching cart items: ', error);
-		res.status(500)
+		return res.status(500).json({ message: 'Internal Server Error' });
 	}
 })
 
@@ -45,6 +45,7 @@ cartRouter.post('/', async (req: Request, res: Response) => {
 
 	} catch (error) {
 		console.error('Error adding item ', error);
+		res.status(500).json({ message: 'Internal Server Error' });
 		
 	}
 
@@ -78,7 +79,7 @@ cartRouter.put('/:id', async (req: Request, res: Response) => {
 			res.status(200).json(({ message: 'Cart item updated' }))
 		}catch (error) {
 			console.error('Error updating cart item: ', error);
-			res.status(500).json({ message: 'Could not update item' })
+			res.status(500).json({ message: 'Internal Server Error' })
 	}
 })
 //DELETE
@@ -101,6 +102,6 @@ cartRouter.delete('/:id', async (req: Request, res: Response) => {
 
 	} catch (error) {
 		console.error('Error deleting cart item: ', error);
-		res.status(500).json({ message: 'Could not delete item' })
+		res.status(500).json({ message: 'Internal Server Error' })
 	}
 })
