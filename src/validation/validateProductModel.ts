@@ -67,7 +67,7 @@ export function validatePutProduct(prod: ProductModel, id: string): ValidationRe
     } else {
         return {
             success: true,
-            value: Array.isArray(prod) ? prod : [prod]
+            value: [prod]
         }
     }
 }

@@ -45,10 +45,28 @@
 	</section>
 	<section>
 		<h2>Users</h2>
+		<input type="text" class="search-user-input" placeholder="search users">
 		<div class="user-list">
 
 		</div>
+		<div class="edit-overlay">
+			<form class="edit-user-form">
+				<div>
+					<label for="edit-username">Name</label>
+					<input type="text" class="edit-username">
+				</div>
+				<div>
+					<label for="edit-admin">Admin? (true or false)</label>
+					<input type="text" class="edit-admin">
+				</div>
+				<div>
+					<button type ="submit" class="submit-edit">Submit</button>
+					<button class="close-edit">Close</button>
+				</div>
+			</form>
+		</div>
 	</section>
+
 
 
 
