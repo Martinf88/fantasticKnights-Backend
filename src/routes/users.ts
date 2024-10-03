@@ -4,6 +4,7 @@ import { getAllUsers } from '../endpoints/users/getAllUsers.js';
 import { ObjectId, WithId } from 'mongodb';
 import { getUserCollection } from '../getDb.js';
 import { Filter } from 'mongodb'
+import { userModelSchema, updateUserSchema } from '../validation/validateUsers.js';
 
 export const userRouter: Router = express.Router();
 
@@ -63,47 +64,49 @@ userRouter.get('/search', async (req: Request, res: Response) => {
 
 userRouter.post('/', async (req: Request, res: Response) => {
     try {
-        const newUser: UserModel = req.body;
+        console.log('Incoming request body:', req.body);  // Logga request body för att se vad som skickas in
 
-        if (!newUser.name || newUser.isAdmin === undefined) {
-            return res.sendStatus(400)
+        const { error, value } = userModelSchema.validate(req.body, { convert: false });
+        if (error) {
+            return res.sendStatus(400);
         }
 
         const userCol = getUserCollection();
-        const postResults = await userCol.insertOne(newUser);
+        await userCol.insertOne(value);
 
-        res.sendStatus(201)
+        res.sendStatus(201);
     } catch (error) {
         console.error('Error creating user', error);
-        res.sendStatus(500)
+        res.sendStatus(500);
     }
 });
 
 userRouter.put('/:id', async (req: Request, res: Response) => {
     try {
         const userId = req.params.id;
-        const updatedUser: Partial<UserModel> = req.body;
 
-        if (!updatedUser || Object.keys(updatedUser).length === 0) {
+        const { error, value } = updateUserSchema.validate(req.body, { convert: false });
+        if (error) {
             return res.sendStatus(400)
         }
 
         const userCol = getUserCollection();
         const updateResult = await userCol.updateOne(
             { _id: new ObjectId(userId) },
-            { $set: updatedUser }
+            { $set: value }
         );
 
         if (updateResult.matchedCount === 0) {
-            return res.sendStatus(404)
+            return res.sendStatus(404);
         }
 
-        res.sendStatus(200)
+        res.sendStatus(200);
     } catch (error) {
         console.error('Error updating user:', error);
-        res.sendStatus(500)
+        res.sendStatus(500);
     }
 });
+
 
 userRouter.delete('/:id', async (req: Request, res: Response) => {
     try {
