@@ -4,10 +4,10 @@ const productImg = document.querySelector('#image')
 const productName = document.querySelector('#name')
 const productPrice = document.querySelector('#price')
 const productInStock = document.querySelector('#stock')
-const addProductButton = document.querySelector('#add-new-product-btn')
 
-function addProduct(event) {
-	event.preventDefault()
+
+export function addProduct() {
+	
 	const newProduct = {
 		image: productImg.value,
 		name: productName.value,
@@ -18,9 +18,7 @@ function addProduct(event) {
 	console.log('Test av addnewproduct', newProduct);
 	
 }
-addProductButton.addEventListener('click', (event) => {
-	addProduct(event)
-	
-})
 
-export { addProduct }
+
+
+

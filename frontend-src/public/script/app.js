@@ -1,4 +1,5 @@
 // import getData from "./api"
+import { addProduct } from "./addNewProduct.js";
 import { getProducts, getUsers, getCart, getFilteredProducts, getFilteredUsers, updateUser } from "./api.js"
 import { addEvent, deleteProductEvent } from "./delete.js";
 import { displaySingelCartItem, displaySingleProduct, displaySingleUsers} from "./displayProducts.js";
@@ -13,7 +14,7 @@ const editFormUsername = document.querySelector('.edit-username');
 const editFormAdmin = document.querySelector('.edit-admin');
 const closeEditFormButton = document.querySelector('.close-edit');
 const editOverlay = document.querySelector('.edit-overlay')
-
+const addProductButton = document.querySelector('#add-new-product-btn')
 
 let products = []
 
@@ -117,3 +118,8 @@ closeEditFormButton.addEventListener('click', () => {
 	const users = await getUsers(); 
 	users.forEach(displaySingleUsers); 
   });
+
+
+  addProductButton.addEventListener('click', () => {
+	addProduct()
+})
