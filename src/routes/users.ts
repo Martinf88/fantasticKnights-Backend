@@ -14,13 +14,13 @@ userRouter.get('/', async (req: Request, res: Response<UserResponse>) => {
         const allUsers: WithId<UserModel>[] = await getAllUsers();
         
         if (allUsers.length === 0) {
-            return res.status(404).json({ message: 'No users found' });
+            return res.sendStatus(404)
         }
         
         res.status(200).send(allUsers);
     } catch (error) {
         console.error('Error fetching users:', error);
-        res.status(500).json({ message: 'Internal server error' });
+        res.sendStatus(500)
     }  
 });
 
@@ -30,7 +30,7 @@ userRouter.get('/search', async (req: Request, res: Response) => {
         const { name, isAdmin } = req.query;
 
         if ((!name || (name as string).trim() === '') && isAdmin === undefined) {
-            return res.status(400).json({ message: 'Invalid search: either "name" or "isAdmin" must be provided' });
+            return res.sendStatus(400)
         }
 
         const filter: Filter<UserModel> = {};
@@ -51,13 +51,13 @@ userRouter.get('/search', async (req: Request, res: Response) => {
         const filteredUsers = await userCol.find(filter).toArray();
 
         if (filteredUsers.length === 0) {
-            return res.status(404).json({ message: 'No matching users' });
+            return res.sendStatus(404)
         }
 
         res.status(200).json(filteredUsers);
     } catch (error) {
         console.error('Error searching for users:', error);
-        res.status(500).json({ message: 'Server error' });
+        res.sendStatus(500)
     }
 });
 
@@ -66,19 +66,16 @@ userRouter.post('/', async (req: Request, res: Response) => {
         const newUser: UserModel = req.body;
 
         if (!newUser.name || newUser.isAdmin === undefined) {
-            return res.status(400).json({ message: 'Missing required fields: name or isAdmin' });
+            return res.sendStatus(400)
         }
 
         const userCol = getUserCollection();
         const postResults = await userCol.insertOne(newUser);
 
-        res.status(201).json({
-            message: 'User created successfully',
-            userId: postResults.insertedId
-        });
+        res.sendStatus(201)
     } catch (error) {
         console.error('Error creating user', error);
-        res.status(500).json({ message: 'Server error' });
+        res.sendStatus(500)
     }
 });
 
@@ -88,7 +85,7 @@ userRouter.put('/:id', async (req: Request, res: Response) => {
         const updatedUser: Partial<UserModel> = req.body;
 
         if (!updatedUser || Object.keys(updatedUser).length === 0) {
-            return res.status(400).json({ message: 'No data provided for update' });
+            return res.sendStatus(400)
         }
 
         const userCol = getUserCollection();
@@ -98,13 +95,13 @@ userRouter.put('/:id', async (req: Request, res: Response) => {
         );
 
         if (updateResult.matchedCount === 0) {
-            return res.status(404).json({ message: 'User not found' });
+            return res.sendStatus(404)
         }
 
-        res.status(200).json({ message: 'User updated successfully' });
+        res.sendStatus(200)
     } catch (error) {
         console.error('Error updating user:', error);
-        res.status(500).json({ message: 'Internal server error' });
+        res.sendStatus(500)
     }
 });
 
@@ -113,7 +110,7 @@ userRouter.delete('/:id', async (req: Request, res: Response) => {
         const userId = req.params.id;
     
         if (!ObjectId.isValid(userId)) {
-            return res.status(400).json({message: 'Invalid user ID'})
+            return res.sendStatus(400)
         }
     
         const userCol = getUserCollection();
@@ -122,18 +119,12 @@ userRouter.delete('/:id', async (req: Request, res: Response) => {
         });
     
         if (deleteResult.deletedCount === 0) {
-            return res.status(404).json({
-                message: 'User not found'
-            });
+            return res.sendStatus(404)
         }
-        res.status(200).json({
-            message: 'User deleted successfully'
-        });
+        res.sendStatus(200)
 
     } catch (error) {
         console.error('Error deleting user', error);
-        res.status(500).json({
-            message: 'server error'
-        });
+        res.sendStatus(500)
     }
 });
