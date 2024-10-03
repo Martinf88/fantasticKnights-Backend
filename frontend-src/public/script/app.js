@@ -104,7 +104,7 @@ closeEditFormButton.addEventListener('click', () => {
   editForm.addEventListener('submit', async (event) => {
 	event.preventDefault();
 	
-	const userId =editForm.getAttribute('data-id');
+	const userId = editForm.getAttribute('data-id');
 	const updatedUser = {
 	  name: editFormUsername.value,
 	  isAdmin: editFormAdmin.value.toLowerCase() === 'true'
@@ -119,7 +119,7 @@ closeEditFormButton.addEventListener('click', () => {
 	users.forEach(displaySingleUsers); 
   });
 
-
+  
   addProductButton.addEventListener('click', () => {
 	addProduct()
 })
