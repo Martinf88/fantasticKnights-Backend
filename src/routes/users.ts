@@ -64,8 +64,6 @@ userRouter.get('/search', async (req: Request, res: Response) => {
 
 userRouter.post('/', async (req: Request, res: Response) => {
     try {
-        console.log('Incoming request body:', req.body);  // Logga request body för att se vad som skickas in
-
         const { error, value } = userModelSchema.validate(req.body, { convert: false });
         if (error) {
             return res.sendStatus(400);
