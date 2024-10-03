@@ -70,26 +70,15 @@ async function getUsers() {
 	return data
 }
 
-// async function getFilteredUsers(name) {
-// 	const response = await fetch(`/users/search?name=${name}`, {
-// 		method: 'GET'
-// 	})
-// 	const data = await response.json()
-// 	console.log('Svar från getFilteredUsers', data);
-	
-// 	return data
-// }
-
 async function getFilteredUsers(name) {
     const response = await fetch(`/users/search?name=${name}`, {
         method: 'GET'
     });
 
-    // Kontrollera om response är `ok` (200-299), annars returnera en tom array
     if (!response.ok) {
         if (response.status === 404) {
             console.log('No users found with the given name.');
-            return []; // Returnera en tom array för att indikera inga resultat
+            return []; 
         }
         throw new Error(`Error fetching filtered users: ${response.statusText}`);
     }
