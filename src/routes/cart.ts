@@ -2,7 +2,7 @@ import express, { Router, Request, Response } from "express";
 import { addItemToCart, getAllCartItems, updateCartItem, deleteCartItem } from "../endpoints/products/getAllCartItems.js";
 import { ObjectId, WithId } from "mongodb";
 import { CartModel } from "../models/cartModel.js";
-import {cartItemSchema, updateCartItemSchema, validateCartItem} from "../validation/cartValidation.js";
+import { updateCartItemSchema, validateCartItem} from "../validation/cartValidation.js";
 import { validateUserAndProduct } from "../validation/cartValidation.js";
 
 
@@ -16,7 +16,7 @@ cartRouter.get('/', async (req: Request, res: Response<WithId<CartModel>[] | { m
 
 	} catch (error) {
 		console.error('Error fetching cart items: ', error);
-		return res.status(500).json({ message: 'Internal Server Error' });
+		return res.sendStatus(500)
 	}
 })
 
@@ -26,17 +26,17 @@ cartRouter.post('/', async (req: Request, res: Response) => {
         const validation = await validateCartItem(req.body);
 
         if (!validation.valid || !validation.value) {
-            return res.status(400).json({ message: validation.message });
+            return res.sendStatus(400)
         }
 
         const newCartItem: CartModel = validation.value;
 
         await addItemToCart(newCartItem);
-        res.status(201).json({ message: 'Item added successfully' });
+        res.sendStatus(201)
 
     } catch (error) {
         console.error('Error adding item: ', error);
-        res.status(500).json({ message: 'Internal Server Error' });
+        res.sendStatus(500)
     }
 });
 //PUT
@@ -45,33 +45,33 @@ cartRouter.put('/:id', async (req: Request, res: Response) => {
         const cartItemId = req.params.id;
 
         if (!ObjectId.isValid(cartItemId)) {
-            return res.status(400).json({ message: 'Invalid cart item ID' });
+            return res.sendStatus(400)
         }
 
         const { error, value } = updateCartItemSchema.validate(req.body);
         if (error) {
-            return res.status(400).json({ message: error.details[0].message });
+            return res.sendStatus(400)
         }
 
         const { userId, productId } = value;
         if (userId && productId) {
             const validation = await validateUserAndProduct(userId, productId);
             if (!validation.valid) {
-                return res.status(404).json({ message: validation.message });
+                return res.sendStatus(404)
             }
         }
 
         const result = await updateCartItem(cartItemId, value);
 
         if (result.matchedCount === 0) {
-            return res.status(404).json({ message: 'Item not found' });
+            return res.sendStatus(404)
         }
 
-        res.status(200).json({ message: 'Cart item updated successfully' });
+        res.sendStatus(200)
 
     } catch (error) {
         console.error('Error updating cart item: ', error);
-        res.status(500).json({ message: 'Internal Server Error' });
+        res.sendStatus(500)
     }
 });
 //DELETE
@@ -81,19 +81,18 @@ cartRouter.delete('/:id', async (req: Request, res: Response) => {
 		const cartItemId = req.params.id
 
 		if(!ObjectId.isValid(cartItemId)){
-			return res.status(400).json({message: 'Invalid ID'})
+			return res.sendStatus(400)
 		}
 
 		const result = await deleteCartItem(req.params.id);
 
 		if(result.deletedCount === 0) {
-			return res.status(404).json({ message: 'Item not found' })
+			return res.sendStatus(404)
 		}
-		  res.status(200).json({
-            message: 'Item deleted successfully'})
+		  res.sendStatus(200)
 
 	} catch (error) {
 		console.error('Error deleting cart item: ', error);
-		res.status(500).json({ message: 'Internal Server Error' })
+		res.sendStatus(500)
 	}
 })
