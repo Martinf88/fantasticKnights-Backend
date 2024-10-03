@@ -8,12 +8,9 @@ async function getCart() {
 }
 
 async function deleteCartItem(id) {
-	const response = await fetch(`/cart/${id}`, {
+	await fetch(`/cart/${id}`, {
 		method: 'DELETE'
 	})
-	// const data = await response.json()
-	await getCart()
-
 }
 
 async function getProducts() {
@@ -52,12 +49,9 @@ async function addNewProduct(newProduct) {
 }
 
 async function deleteProduct(id) {
-	const response = await fetch(`/products/${id}`, {
+	await fetch(`/products/${id}`, {
 		method: 'DELETE'
 	})
-	// const data = await response.json()
-	await getProducts()
-
 }
 
 

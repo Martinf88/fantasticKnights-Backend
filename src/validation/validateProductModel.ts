@@ -25,10 +25,10 @@ const productSchema = Joi.object<ProductModel>({
 })
 
 const productPutSchema = Joi.object<ProductModel>({
-    name: Joi.string().trim().min(1).max(100),
-    price: Joi.number().positive().precision(2).strict(),
-    amountInStock: Joi.number().integer().min(0).strict(),
-    image: Joi.string().uri()
+    name: Joi.string().trim().min(1).max(100).optional(),
+    price: Joi.number().positive().precision(2).optional().strict(),
+    amountInStock: Joi.number().integer().min(0).optional().strict(),
+    image: Joi.string().uri().optional()
 })
 
 const productsArraySchema = Joi.array().items(productSchema).min(1)

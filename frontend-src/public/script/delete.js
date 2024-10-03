@@ -1,14 +1,17 @@
 import { deleteCartItem, deleteProduct } from "./api.js"
-import { displayProducts } from "./app.js"
+import { displayCart, displayProducts } from "./app.js"
 
 const productsList = document.querySelector('.product-list')
+const cartList = document.querySelector('.cart-list')
 
-function addEvent() {
+function addDeleteCartEvent() {
     const deleteCartItemButton = document.querySelectorAll('.cart-delete-button')
     deleteCartItemButton.forEach(button => {
         const itemId = button.getAttribute('data-id')
-        button.addEventListener('click', () => {
-            deleteCartItem(itemId)
+        button.addEventListener('click', async() => {
+            await deleteCartItem(itemId)
+            cartList.innerHTML = ''
+            await displayCart()
         })
     })    
 }
@@ -29,4 +32,4 @@ function deleteProductEvent() {
         })
     })    
 }
-export { addEvent, deleteProductEvent }
+export { addDeleteCartEvent, deleteProductEvent }

@@ -1,7 +1,7 @@
 // import getData from "./api"
 import { addProduct } from "./addNewProduct.js";
 import { getProducts, getUsers, getCart, getFilteredProducts, getFilteredUsers, updateUser } from "./api.js"
-import { addEvent, deleteProductEvent } from "./delete.js";
+import { addDeleteCartEvent, deleteProductEvent } from "./delete.js";
 import { displaySingelCartItem, displaySingleProduct, displaySingleUsers} from "./displayProducts.js";
 
 const productsList = document.querySelector('.product-list')
@@ -40,7 +40,7 @@ productSearch.addEventListener('input', async () => {
 	}
 })
 
-async function displayCart() {
+export async function displayCart() {
 	const cart = await getCart()	
 	const users = await getUsers()
 	
@@ -50,7 +50,7 @@ async function displayCart() {
 		cartList.appendChild(cartItem)
 	})
 	
-	addEvent()
+	addDeleteCartEvent()
 }
 displayProducts()
 displayCart()
