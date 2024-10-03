@@ -22,6 +22,9 @@ router.get('/products', async (req: Request, res: Response<WithId<ProductModel>[
 router.get('/products/search', async (req: Request, res: Response<WithId<ProductModel>[]>) => {
     try {
         const { name, maxPrice, minPrice } = req.query
+        if(name === undefined || name === "") {
+            return res.sendStatus(400)
+        }
         const filteredProducts: WithId<ProductModel>[] = await getFilteredProducts({
             name: name as string | undefined,
             maxPrice: maxPrice ? Number(maxPrice): undefined,
@@ -31,7 +34,7 @@ router.get('/products/search', async (req: Request, res: Response<WithId<Product
 
     } catch(error) {
         console.log('Error in getting filtered items products.ts', error);    
-        res.status(500)    
+        res.sendStatus(500)    
     }
 })
 
@@ -68,7 +71,7 @@ router.put('/products/:id', async (req: Request, res: Response) => {
         }
         const result = await updateProduct(id, updatedProduct)
         if (result.modifiedCount === 0) {
-            return res.status(404).json({message: 'Product not updated'})
+            return res.status(400).json({message: 'Product not updated'})
         }
         res.status(200).json({message: 'Product updated'})
     } catch(error) {
@@ -86,6 +89,6 @@ router.delete('/products/:id', async (req: Request, res: Response) => {
         }
         res.status(200).json({message: 'Product deleted successfully'})
     } catch(error) {
-        
+        res.status(500).json({message: 'Server down'})
     }
 })

@@ -27,28 +27,31 @@ async function displayProducts() {
 	products.forEach(displaySingleProduct)
 	deleteProductEvent()
 }
-displayProducts()
 
 productSearch.addEventListener('input', async () => {
 	if (productSearch.value.length > 0) {
 		const result = await getFilteredProducts(productSearch.value)
 		productsList.innerHTML = ''
 		result.forEach(displaySingleProduct)
-	}	
+	} if (productSearch.value === '') {
+		productsList.innerHTML = ''
+		displayProducts()
+	}
 })
 
 async function displayCart() {
 	const cart = await getCart()	
 	const users = await getUsers()
-
-
+	
+	
 	cart.forEach(cartData => {
 		const cartItem = displaySingelCartItem(cartData, users, products)
 		cartList.appendChild(cartItem)
 	})
-
+	
 	addEvent()
 }
+displayProducts()
 displayCart()
 
 async function displayUsers() {

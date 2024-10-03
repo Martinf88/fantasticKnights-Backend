@@ -40,6 +40,8 @@ cartRouter.post('/', async (req: Request, res: Response) => {
     }
 });
 //PUT
+//TODO: Testa valideringen med insomnia.
+//TODO: Gå igenom valideringen för PUT 
 cartRouter.put('/:id', async (req: Request, res: Response) => {
     try {
         const cartItemId = req.params.id;
