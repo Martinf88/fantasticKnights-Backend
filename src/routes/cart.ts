@@ -2,8 +2,7 @@ import express, { Router, Request, Response } from "express";
 import { addItemToCart, getAllCartItems, updateCartItem, deleteCartItem } from "../endpoints/products/getAllCartItems.js";
 import { ObjectId, WithId } from "mongodb";
 import { CartModel } from "../models/cartModel.js";
-import { updateCartItemSchema, validateCartItem} from "../validation/cartValidation.js";
-import { validateUserAndProduct } from "../validation/cartValidation.js";
+import { validatePutCartItem, validateCartItem} from "../validation/cartValidation.js";
 
 
 export const cartRouter: Router = express.Router()
@@ -25,7 +24,7 @@ cartRouter.post('/', async (req: Request, res: Response) => {
     try {
         const validation = await validateCartItem(req.body);
 
-        if (!validation.valid || !validation.value) {
+        if (!validation.success) {
             return res.sendStatus(400)
         }
 
@@ -44,24 +43,13 @@ cartRouter.put('/:id', async (req: Request, res: Response) => {
     try {
         const cartItemId = req.params.id;
 
-        if (!ObjectId.isValid(cartItemId)) {
-            return res.sendStatus(400)
+		const validation = await validatePutCartItem(req.body, cartItemId)
+
+		if (!validation.success) {
+            return res.sendStatus(400);
         }
 
-        const { error, value } = updateCartItemSchema.validate(req.body);
-        if (error) {
-            return res.sendStatus(400)
-        }
-
-        const { userId, productId } = value;
-        if (userId && productId) {
-            const validation = await validateUserAndProduct(userId, productId);
-            if (!validation.valid) {
-                return res.sendStatus(404)
-            }
-        }
-
-        const result = await updateCartItem(cartItemId, value);
+        const result = await updateCartItem(cartItemId, validation.value);
 
         if (result.matchedCount === 0) {
             return res.sendStatus(404)
