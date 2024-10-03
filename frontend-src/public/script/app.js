@@ -22,7 +22,7 @@ async function loadProducts() {
 	products = await getProducts()
 }
 
-async function displayProducts() {
+export async function displayProducts() {
 	await loadProducts()
 
 	products.forEach(displaySingleProduct)
