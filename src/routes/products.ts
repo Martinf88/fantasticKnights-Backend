@@ -30,6 +30,9 @@ router.get('/products/search', async (req: Request, res: Response<WithId<Product
             maxPrice: maxPrice ? Number(maxPrice): undefined,
             minPrice: minPrice ? Number(minPrice): undefined
         })
+        if(filteredProducts.length <= 0) {
+             return res.sendStatus(404)
+        }
         res.status(200).send(filteredProducts)
 
     } catch(error) {

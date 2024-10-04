@@ -1,6 +1,7 @@
-# Webshop API Documentation
+# Webshop API Documentation by Fantastic Knights
+##### Martin Fahlström, Stephanie Karlsson and Felipe Fernandez
 
-This is the backend API for a webshop built with Node.js, Express, and MongoDB Atlas. The API provides functionality for products, users, and cart management. Below is the detailed information on how to interact with the API.
+This is the backend API for a webshop built with Node.js, Express, and MongoDB Atlas. The API provides functionality for products, users, and cart management. Below is the detailed information on how to interact with the API. 
 
 ## Base URL
 http://localhost:9876
@@ -35,7 +36,7 @@ http://localhost:9876
      {
        "name": "Product Name",
        "price": 99.99,
-       "image": "url"
+       "image": "url",
        "amountInStock": 100,
      }
      ```
@@ -84,12 +85,19 @@ http://localhost:9876
 3. **Update Cart Item**
    - **URL**: `/cart/:id`
    - **Method**: `PUT`
+   - **Body**:
+     ```json
+     {
+       "userId": "user_id",
+       "productId": "product_id",
+       "quantity": 1
+     }
+     ```
    - **Description**: Update the quantity of a cart item by its ID.
 
 4. **Delete a Cart Item**
    - **URL**: `/cart/:id`
    - **Method**: `DELETE`
-   - **Body**: Same as POST.
    - **Description**: Remove an item from the cart by its ID.
 
 ### Users
@@ -99,31 +107,25 @@ http://localhost:9876
    - **Method**: `GET`
    - **Description**: Fetch all users.
 
-2. **Get a User by ID**
-   - **URL**: `/users/:id`
-   - **Method**: `GET`
-   - **Description**: Fetch a single user by ID.
-
-3. **Add a New User**
+2. **Add a New User**
    - **URL**: `/users`
    - **Method**: `POST`
    - **Body**:
      ```json
      {
        "name": "User Name",
-       "email": "user@example.com",
-       "password": "Password123"
+       "isAdmin": Boolean
      }
      ```
    - **Description**: Add a new user.
 
-4. **Update a User**
+3. **Update a User**
    - **URL**: `/users/:id`
    - **Method**: `PUT`
    - **Body**: Same as POST.
    - **Description**: Update user details.
 
-5. **Delete a User**
+4. **Delete a User**
    - **URL**: `/users/:id`
    - **Method**: `DELETE`
    - **Description**: Delete a user by their ID.
@@ -139,7 +141,7 @@ http://localhost:9876
 
 ## Validation
 
-All incoming requests are validated using Joi to ensure the correct data structure.
+All incoming requests are validated using Joi to ensure the correct data structure and will respond with the appropriate status codes.
 
 ## Frontend Integration
 
