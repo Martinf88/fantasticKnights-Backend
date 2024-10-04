@@ -1,5 +1,5 @@
 import express, { Router, Request, Response } from "express";
-import { addItemToCart, getAllCartItems, updateCartItem, deleteCartItem } from "../endpoints/products/getAllCartItems.js";
+import { addItemToCart, getAllCartItems, updateCartItem, deleteCartItem } from "../endpoints/cart/getAllCartItems.js";
 import { ObjectId, WithId } from "mongodb";
 import { CartModel } from "../models/cartModel.js";
 import { validatePutCartItem, validateCartItem} from "../validation/cartValidation.js";
