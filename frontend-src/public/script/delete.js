@@ -1,5 +1,5 @@
 import { deleteCartItem, deleteProduct } from "./api.js"
-import { displayCart, displayProducts } from "./app.js"
+import { displayCart, displayProducts } from "./displayItems.js"
 
 const productsList = document.querySelector('.product-list')
 const cartList = document.querySelector('.cart-list')

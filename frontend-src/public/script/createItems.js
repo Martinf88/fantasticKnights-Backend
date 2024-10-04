@@ -1,5 +1,4 @@
 const productsList = document.querySelector('.product-list')
-const cartList = document.querySelector('.cartData-list')
 const userList = document.querySelector('.user-list')
 
 export function displaySingleProduct(product) {
