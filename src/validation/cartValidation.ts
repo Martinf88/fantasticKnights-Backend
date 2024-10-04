@@ -1,6 +1,6 @@
 import Joi from "joi";
 import { CartModel } from "../models/cartModel.js";
-import { getProductById, getUserById } from "../endpoints/products/getAllCartItems.js";
+import { getProductById, getUserById } from "../endpoints/cart/getAllCartItems.js";
 import { ObjectId } from "mongodb";
 
 

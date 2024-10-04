@@ -65,32 +65,36 @@ async function getUsers() {
 }
 
 async function getFilteredUsers(name) {
-	const response = await fetch(`/users/search?name=${name}`, {
-		method: 'GET'
-	})
-	const data = await response.json()
-	console.log('Svar från getFilteredUsers', data);
-	
-	return data
-}
-
-async function updateUser(userId, updatedUser) {
-    const response = await fetch(`/users/${userId}`, {
-        method: 'PUT', 
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(updatedUser),
+    const response = await fetch(`/users/search?name=${name}`, {
+        method: 'GET'
     });
 
     if (!response.ok) {
-        throw new Error('Failed to update user');
+        if (response.status === 404) {
+            console.log('No users found with the given name.');
+            return []; 
+        }
+        throw new Error(`Error fetching filtered users: ${response.statusText}`);
     }
 
     const data = await response.json();
-    console.log('User updated:', data);
-    return data; 
+    console.log('Svar från getFilteredUsers:', data);
+    return data;
 }
+
+
+async function updateUser(userId, updatedUser) {
+    const response = await fetch(`/users/${userId}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(updatedUser)
+    });
+
+    return response;
+}
+
 
 
 export { getCart, getProducts, getUsers, deleteCartItem, addNewProduct, deleteProduct, getFilteredProducts, getFilteredUsers, updateUser }

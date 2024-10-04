@@ -65,17 +65,34 @@ async function displayUsers() {
 }
 displayUsers()
 
-userSearch.addEventListener('input', async () => {
-	if (userSearch.value.length > 0) {
-		const result = await getFilteredUsers(userSearch.value)
-		userList.innerHTML = ''
-		result.forEach(displaySingleUsers)
+// userSearch.addEventListener('input', async () => {
+// 	if (userSearch.value.length > 0) {
+// 		const result = await getFilteredUsers(userSearch.value)
+// 		userList.innerHTML = ''
+// 		result.forEach(displaySingleUsers)
 
-	} else {
-		userList.innerHTML = ''
-		displayUsers()
-	}
-})
+// 	} else {
+// 		userList.innerHTML = ''
+// 		displayUsers()
+// 	}
+// })
+
+userSearch.addEventListener('input', async () => {
+    if (userSearch.value.length > 0) {
+        const result = await getFilteredUsers(userSearch.value);
+
+        userList.innerHTML = '';
+        if (result.length > 0) {
+            result.forEach(displaySingleUsers);
+        } else {
+            userList.innerHTML = 'Inga användare hittades.'; 
+        }
+    } else {
+        userList.innerHTML = '';
+        displayUsers();
+    }
+});
+
 
 closeEditFormButton.addEventListener('click', () => {
 	editOverlay.classList.remove('show')
@@ -104,7 +121,7 @@ closeEditFormButton.addEventListener('click', () => {
   editForm.addEventListener('submit', async (event) => {
 	event.preventDefault();
 	
-	const userId =editForm.getAttribute('data-id');
+	const userId = editForm.getAttribute('data-id');
 	const updatedUser = {
 	  name: editFormUsername.value,
 	  isAdmin: editFormAdmin.value.toLowerCase() === 'true'
@@ -119,7 +136,7 @@ closeEditFormButton.addEventListener('click', () => {
 	users.forEach(displaySingleUsers); 
   });
 
-
+  
   addProductButton.addEventListener('click', () => {
 	addProduct()
 })

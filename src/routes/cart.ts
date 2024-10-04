@@ -1,5 +1,5 @@
 import express, { Router, Request, Response } from "express";
-import { addItemToCart, getAllCartItems, updateCartItem, deleteCartItem } from "../endpoints/products/getAllCartItems.js";
+import { addItemToCart, getAllCartItems, updateCartItem, deleteCartItem } from "../endpoints/cart/getAllCartItems.js";
 import { ObjectId, WithId } from "mongodb";
 import { CartModel } from "../models/cartModel.js";
 import { validatePutCartItem, validateCartItem} from "../validation/cartValidation.js";
@@ -39,8 +39,6 @@ cartRouter.post('/', async (req: Request, res: Response) => {
     }
 });
 //PUT
-//TODO: Testa valideringen med insomnia.
-//TODO: Gå igenom valideringen för PUT 
 cartRouter.put('/:id', async (req: Request, res: Response) => {
     try {
         const cartItemId = req.params.id;

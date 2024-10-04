@@ -112,23 +112,16 @@ input[type="text"] {
 }
 
 /* Product-item styling */
-/* Grundläggande styling för sidan */
-body {
-    font-family: Arial, sans-serif;
-    padding: 20px;
-    background-color: #f4f4f4;
-}
 
-/* Styling för produktlistan som ett grid */
 .product-list {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Automatiskt anpassat antal kolumner beroende på skärmstorlek */
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 20px;
     margin-top: 20px;
     padding: 0;
 }
 
-/* Styling för varje produktkort */
+
 .product-item {
     background-color: white;
     border: 1px solid #ddd;
@@ -140,39 +133,39 @@ body {
 }
 
 .product-item:hover {
-    transform: scale(1.05); /* Lätt förstoring när muspekaren är över */
-    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2); /* Ökad skugga vid hover */
+    transform: scale(1.05);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
 }
 
-/* Styling för bilden i produktkortet */
+
 .product-item img {
-    width: 100%; /* Bilden fyller bredden på kortet */
-    height: auto; /* Behåller bildens proportioner */
+    width: 100%;
+    height: auto;
     border-radius: 8px;
     margin-bottom: 15px;
 }
 
-/* Styling för rubrik (h3) i produktkortet */
+
 .product-item h3 {
     font-size: 1.2rem;
     color: #333;
     margin-bottom: 10px;
 }
 
-/* Styling för texten (p) i produktkortet */
+
 .product-item p {
     font-size: 0.9rem;
     color: #666;
     margin-bottom: 15px;
 }
 
-/* Styling för prissättningen eller informationen i sista paragrafen */
+
 .product-item p:last-of-type {
     font-weight: bold;
     color: #000;
 }
 
-/* Styling för knappen i produktkortet */
+
 .product-item button {
     background-color: #28a745;
     color: white;
@@ -189,7 +182,7 @@ body {
 }
 
 
-/* Styling för användarlistan */
+/* Styling för user-list */
 .user-list {
     display: flex;
     flex-direction: column;
