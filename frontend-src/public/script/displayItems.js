@@ -20,8 +20,7 @@ async function displayProducts() {
 async function displayCart() {
 	const cart = await getCart()	
 	const users = await getUsers()
-	
-	
+		
 	cart.forEach(cartData => {
 		const cartItem = displaySingelCartItem(cartData, users, products)
 		cartList.appendChild(cartItem)

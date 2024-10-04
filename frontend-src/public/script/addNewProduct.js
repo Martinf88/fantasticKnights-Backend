@@ -5,7 +5,6 @@ const productName = document.querySelector('#name')
 const productPrice = document.querySelector('#price')
 const productInStock = document.querySelector('#stock')
 
-
 export function addProduct() {
 	
 	const newProduct = {
@@ -18,7 +17,3 @@ export function addProduct() {
 	console.log('Test av addnewproduct', newProduct);
 	
 }
-
-
-
-

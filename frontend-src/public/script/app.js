@@ -14,8 +14,7 @@ const editFormAdmin = document.querySelector('.edit-admin');
 const closeEditFormButton = document.querySelector('.close-edit');
 const editOverlay = document.querySelector('.edit-overlay')
 const addProductButton = document.querySelector('#add-new-product-btn')
-
-
+const cartList = document.querySelector('.cart-list');
 
 productSearch.addEventListener('input', async () => {
 	if (productSearch.value.length > 0) {
@@ -27,8 +26,6 @@ productSearch.addEventListener('input', async () => {
 		displayProducts()
 	}
 })
-
-
 
 userSearch.addEventListener('input', async () => {
 	if (userSearch.value.length > 0) {
@@ -46,11 +43,9 @@ userSearch.addEventListener('input', async () => {
     }
 });
 
-
 closeEditFormButton.addEventListener('click', () => {
 	editOverlay.classList.remove('show')
 });
-
 
 document.querySelector('.user-list').addEventListener('click', async (e) => {
 	if (e.target.classList.contains('edit-button')) {
@@ -84,11 +79,11 @@ editForm.addEventListener('submit', async (event) => {
 	
 	editOverlay.classList.remove('show')
 	
-	document.querySelector('.user-list').innerHTML = ''; 
-	const users = await getUsers(); 
-	users.forEach(displaySingleUsers); 
+	userList.innerHTML = ''; 
+	cartList.innerHTML = ''
+	await displayCart()
+	await displayUsers()
 });
-
 
 addProductButton.addEventListener('click', () => {
 	addProduct()

@@ -6,6 +6,7 @@ const cartList = document.querySelector('.cart-list')
 
 function addDeleteCartEvent() {
     const deleteCartItemButton = document.querySelectorAll('.cart-delete-button')
+
     deleteCartItemButton.forEach(button => {
         const itemId = button.getAttribute('data-id')
         button.addEventListener('click', async() => {
@@ -18,6 +19,7 @@ function addDeleteCartEvent() {
 
 function deleteProductEvent() {
     const deleteProductButton = document.querySelectorAll('.product-delete-button')
+    
     deleteProductButton.forEach(button => {
         const productId = button.getAttribute('data-id')
         button.addEventListener('click', async() => {

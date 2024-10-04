@@ -1,7 +1,7 @@
 const productsList = document.querySelector('.product-list')
 const userList = document.querySelector('.user-list')
 
-export function displaySingleProduct(product) {
+function displaySingleProduct(product) {
 		const productItem = document.createElement('div');
 		const img = document.createElement('img')
 		const name = document.createElement('h3');
@@ -25,11 +25,10 @@ export function displaySingleProduct(product) {
 		productItem.appendChild(price)
 		productItem.appendChild(inStock)
 		productItem.append(deleteButton)
-		productsList.appendChild(productItem)
-	
+		productsList.appendChild(productItem)	
 }
 
-export function displaySingelCartItem(cartData, users, products) {
+function displaySingelCartItem(cartData, users, products) {
 		const cartItem = document.createElement('div')
 		const name = document.createElement('h4')
 		const boughtProduct = document.createElement('h4')
@@ -57,7 +56,7 @@ export function displaySingelCartItem(cartData, users, products) {
 		return cartItem;
 }
 
-export function displaySingleUsers(userData) {
+function displaySingleUsers(userData) {
     const userItem = document.createElement('div');
     const userName = document.createElement('h4');
     const userAdmin = document.createElement('p');
@@ -77,3 +76,5 @@ export function displaySingleUsers(userData) {
 
     userList.appendChild(userItem);
 }
+
+export { displaySingelCartItem, displaySingleProduct, displaySingleUsers }
