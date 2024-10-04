@@ -5,6 +5,8 @@ import { getUserCollection, getProductCollection } from "../../getDb.js";
 import { UserModel } from "../../models/userModel.js";
 import { ProductModel } from "../../models/productModel.js";
 
+
+//GET userId and productId for display in cart
 async function getUserById(userId: string): Promise<WithId<UserModel> | null> {
 	const col = getUserCollection()
 	return await col.findOne({ _id: new ObjectId(userId) });

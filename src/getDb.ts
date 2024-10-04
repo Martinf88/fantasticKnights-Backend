@@ -37,8 +37,7 @@ function getProductCollection(): Collection<ProductModel> {
     return db.collection<ProductModel>('product');
 }
 
-
-//TODO: Close database function
+//TODO: ta reda på hur det är tänkt att vi skall använda client.close
 async function closeClient() {
 	if(client) {
 		try {

@@ -3,7 +3,7 @@ import cors from 'cors'
 import { cartRouter } from "./routes/cart.js";
 import { userRouter } from "./routes/users.js"
 import { router as productRouter } from './routes/products.js'
-import { getDb } from "./getDb.js";
+import { closeClient, getDb } from "./getDb.js";
 
 
 const app: Express = express()
@@ -36,6 +36,14 @@ async function startServer() {
 		console.error('Error connecting to the database:', error);
 		
 	}
+
+	//TODO: Ta reda på om vi skall använda den här!!
+	
+	// process.on('SIGINT', () => {
+	// 	console.log("Shutting down the server...");
+	// 	closeClient(); 
+	// 	process.exit(); 
+	// });
 	
 }
 
